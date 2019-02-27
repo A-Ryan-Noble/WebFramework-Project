@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <style>
-            @import '/css/flash.css';
-            @import '/css/nav.css';
-        </style>
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Default title{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <style>
+        @import '/css/flash.css';
+        @import '/css/nav.css';
+        @import '/css/stylesheet.css';
+    </style>
+</head>
+<body>
+
+<nav>
+    <section class = "mainBar">
+        <ul>
+            <li><a href="{{ path('homepage') }}" class="{% block homePage %}{% endblock %}"> Home</a></li>
+{#
+            <li><a href="{{ path('gallery') }}" class="{% block galleryPage %}{% endblock %}"> Gallery</a></li>
+#}
+            <li><a href="{{ path('user') }}" class="{% block accountPage %}{% endblock %}"> Account</a></li>
+        </ul>
+    </section>
+</nav>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
 </html>

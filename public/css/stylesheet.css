@@ -1,0 +1,13 @@
+body
+{
+    background-color: lavender;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    margin-top: 0.1rem;
+}
+
+h1,h2, h3, h4
+{
+    font-family: Verdana, Georgia, serif, "Times New Roman";
+    text-align:center;
+}

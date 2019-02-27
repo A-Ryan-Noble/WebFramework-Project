@@ -1,3 +1,59 @@
-nav {
-    background-color: black;
+nav, nav.mainBar
+{
+    border: 3px solid #ff4d4d;
+    background-color:  #4fabc9;
+    font-family:Verdana, Arial, sans-serif;
+    text-align:center;
+}
+
+nav ul li
+{
+    display: inline;                /* one bar across*/
+    list-style-type:none;           /* removes the list apperance */
+    text-decoration: none;
+    color: white;
+}
+
+nav a:link
+{
+    color: white;
+    text-decoration: none;
+}
+
+nav a:visited
+{
+    color: yellow; /* nav turns once it's visited */
+    text-decoration: none;
+}
+nav a:hover
+{
+    color: lawngreen;
+    text-transform: uppercase;
+}
+
+nav a.current_page
+{
+    color: silver;
+    font-weight: bold;
+    font-size: 20px;
+}
+nav .accountsBar
+{
+    color: #d87474;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 10px;
+}
+
+nav .accountsBar span a:link
+{
+    font-size: 18px;
+    padding-left: 30px;
+    text-decoration: none;
+}
+
+nav .accountsBar span a:hover
+{
+    font-size: 20px;
+    text-transform: capitalize;
 }
