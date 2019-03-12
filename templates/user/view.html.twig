@@ -1,26 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UsersController!{% endblock %}
+{% block homePage %} current_page {% endblock %}
 
-{% block accountPage %} current_page {% endblock %}
+{% block title %} User view page{% endblock %}
+
 {% block body %}
 
-    {#<style>
-        /*    .example-wrapper{ margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    <h2>User view page</h2>
 
-            .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-        */
-    </style>
-
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
-
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at <code><a href="{{ 'E:/college/Third Year/Semmester 6/Web Framework Development/Project/B00097070-Project/src/Controller/UserControllerphp'|file_link(0) }}">src/Controller/UserControllerphp</a></code></li>
-            <li>Your template at <code><a href="{{ 'E:/college/Third Year/Semmester 6/Web Framework Development/Project/B00097070-Project/templates/user/view.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-        </ul>
-    </div>#}
-
+    <p>
+        Welcome to user view page
+    </p>
 
 {% endblock %}

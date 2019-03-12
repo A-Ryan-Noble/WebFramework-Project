@@ -14,8 +14,11 @@ class AdminController extends AbstractController
      */
     public function index()
     {
-        return $this->render('admin/view.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
+        $template = 'admin/view.html.twig';
+
+        $args=[
+        ];
+
+        return $this->render($template,$args);
     }
 }

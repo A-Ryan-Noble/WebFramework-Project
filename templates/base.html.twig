@@ -15,11 +15,11 @@
 <nav>
     <section class = "mainBar">
         <ul>
-            <li><a href="{{ path('homepage') }}" class="{% block homePage %}{% endblock %}"> Home</a></li>
+            <li><a href="{{ url('homepage') }}" class="{% block homePage %}{% endblock %}"> Home</a></li>
 {#
             <li><a href="{{ path('gallery') }}" class="{% block galleryPage %}{% endblock %}"> Gallery</a></li>
 #}
-            <li><a href="{{ path('user') }}" class="{% block accountPage %}{% endblock %}"> Account</a></li>
+            <li><a href="{{ url('user') }}" class="{% block accountPage %}{% endblock %}"> Account</a></li>
         </ul>
     </section>
 </nav>

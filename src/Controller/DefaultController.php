@@ -12,9 +12,11 @@ class DefaultController extends AbstractController
      */
     public function indexAction()
     {
-      // $template = 'default/homepage.html.twig';
-        return $this->render('default/homepage.html.twig', [
-            // no arguments
-        ]);
+        $template = 'default/homepage.html.twig';
+
+        $args=[
+        ];
+
+        return $this->render($template,$args);
     }
 }
