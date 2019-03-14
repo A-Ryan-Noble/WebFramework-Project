@@ -12,13 +12,14 @@ h1,h2, h3, h4
     text-align:center;
 }
 
-#tables , td , th
+#tables ,table, tr, th, td
 {
     background-color: #fafafa;
-    border: black solid;
+    border: black solid;;
+    border-top: black solid;
 }
 
-#tables thead
+#tables ,th
 {
-    color: orangered;
+    color: orangered
 }

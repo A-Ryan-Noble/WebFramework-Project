@@ -9,15 +9,14 @@
         You are logged in as:
     </h4>
 
-    <table class="table" id="tables">
-        <thead>
-        <tr>
-            <th>Username</th>
-            <th>Role:</th>
-            {#<th>Password</th>#}
-        </tr>
-        </thead>
+    <br>
+
+    <table class="table">
         <tbody>
+        <tr>
+            <th>Username:</th>
+            <th>Role:</th>
+        </tr>
         <tr>
             <td>{{ app.user.username}}</td>
             <td>
@@ -25,7 +24,6 @@
                     {{ role }}
                 {% endfor %}
             </td>
-            {#<td>{{ app.user.password}}</td>#}
         </tr>
         </tbody>
     </table>
