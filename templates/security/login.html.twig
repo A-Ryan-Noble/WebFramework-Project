@@ -1,20 +1,26 @@
 {% extends 'base.html.twig' %}
+
+{% block loginPage %} current_page {% endblock %}
+
 {% block title %}Log in!{% endblock %}
 {% block body %}
     <form method="post">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         {% if error %}
-            <div style="background-color: pink; padding: 1rem;">
+            <div class="flash-error">
                 {{ error.messageKey|trans(error.messageData, 'security') }}
             </div>
         {% endif %}
-        <h1>Login</h1>
+        <h2>Login</h2>
         Username:
         <input value="{{ last_username }}" name="username" id="inputUsername" autofocus>
         <p>
             Password:
             <input type="password" name="password" id="inputPassword">
         <p>
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
             <button type="submit">Login</button>
         </p>
     </form>

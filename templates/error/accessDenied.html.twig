@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}error{% endblock %}
+
+{% block body %}
+    <h1>Access Denied!</h1>
+
+    <p>
+        Sorry you don't have access to the page you requested.
+        <br>
+        <a href="{{ url('homepage') }}">Go to home page</a>
+        <br>
+        <a href="{{ url('app_login') }}">Go back to Login</a>
+    </p>
+{% endblock %}

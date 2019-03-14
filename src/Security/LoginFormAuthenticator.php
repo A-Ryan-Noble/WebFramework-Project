@@ -65,12 +65,23 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
+        $password = $this->entityManager->getRepository(User::class)->findBy(['username' => $credentials['password']]);
 
-        if (!$user) {
+        if (!$user && !$password) {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException("Incorrect: Please try again!");
+        }
+
+        else if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
 
+        elseif (!$password)
+        {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException(' Incorrect.Password is wrong');
+        }
         return $user;
     }
 
@@ -85,8 +96,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        return new RedirectResponse($this->urlGenerator->generate('login_success'));
     }
 
     protected function getLoginUrl()

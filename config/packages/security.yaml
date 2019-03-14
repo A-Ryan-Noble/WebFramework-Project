@@ -1,16 +1,18 @@
 security:
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
     providers:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Entity\User
                 property: username
-        # used to reload user from session & other features (e.g. switch_user)
-        # used to reload user from session & other features (e.g. switch_user)
-    encoders:
-      App\Entity\User:
-        algorithm: bcrypt
-
 
     firewalls:
         dev:
@@ -18,13 +20,16 @@ security:
             security: false
         main:
             anonymous: true
-            form_login:
-                login_path: login
-                check_path: login
 
             logout:
-                path:   /logout
-                target: /
+                path:   app_logout
+                invalidate_session: true
+
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+
+            access_denied_handler: App\Security\AccessDeniedHandler
+
+
+

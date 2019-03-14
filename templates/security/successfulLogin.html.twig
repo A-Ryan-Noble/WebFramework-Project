@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block loginSuccessfulPage %} current_page {% endblock %}
+
+{% block title %}Logged in{% endblock %}
+
+{% block body %}
+    <h4>
+        You are logged in as:
+    </h4>
+
+    <table class="table" id="tables">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Role:</th>
+            {#<th>Password</th>#}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ app.user.username}}</td>
+            <td>
+                {% for role in  app.user.roles %}
+                    {{ role }}
+                {% endfor %}
+            </td>
+            {#<td>{{ app.user.password}}</td>#}
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

@@ -2,22 +2,22 @@ nav, nav.mainBar
 {
     border: 3px solid #ff4d4d;
     background-color:  #4fabc9;
-    font-family:Verdana, Arial, sans-serif;
-    text-align:center;
+    font-family:Verdana, Arial, "sans-serif";
 }
 
-nav ul li
-{
-    display: inline;                /* one bar across*/
-    list-style-type:none;           /* removes the list apperance */
-    text-decoration: none;
-    color: white;
-}
+/*nav ul li*/
+/*{*/
+    /*display: inline;                !* one bar across*!*/
+    /*list-style-type:none;           !* removes the list apperance *!*/
+    /*text-decoration: none;*/
+    /*color: white;*/
+/*}*/
 
 nav a:link
 {
     color: white;
     text-decoration: none;
+    font-size: 1rem;
 }
 
 nav a:visited
@@ -35,25 +35,12 @@ nav a.current_page
 {
     color: silver;
     font-weight: bold;
-    font-size: 20px;
-}
-nav .accountsBar
-{
-    color: #d87474;
-    font-size: 18px;
-    text-decoration: none;
-    padding: 10px;
+    /*font-size: 20px;*/
 }
 
-nav .accountsBar span a:link
+#loggedIn
 {
-    font-size: 18px;
-    padding-left: 30px;
-    text-decoration: none;
-}
-
-nav .accountsBar span a:hover
-{
-    font-size: 20px;
-    text-transform: capitalize;
-}
+    font-size: 1rem;
+    color: sienna;
+    font-weight: bold;
+}n

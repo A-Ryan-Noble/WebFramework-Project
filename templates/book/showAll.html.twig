@@ -2,24 +2,22 @@
 
 {% block booksPage %} current_page {% endblock %}
 
-{% block title %}Book index{% endblock %}
+{% block title %}All Books{% endblock %}
 
 {% block body %}
-    <h1>Book index</h1>
+    <h1>Books</h1>
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Barcode</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>StartingBid</th>
-                <th>Bid</th>
-                <th>BidAccepted</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Barcode</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>StartingBid</th>
+            <th>BidAccepted</th>
+        </tr>
         </thead>
         <tbody>
         {% for book in books %}
@@ -30,12 +28,7 @@
                 <td>{{ book.author }}</td>
                 <td>{{ book.genre }}</td>
                 <td>{{ book.startingBid }}</td>
-                <td>{{ book.bid }}</td>
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('book_show', {'id': book.id}) }}">show</a>
-                    <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
-                </td>
             </tr>
         {% else %}
             <tr>
@@ -45,5 +38,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('book_new') }}">Create new</a>
 {% endblock %}

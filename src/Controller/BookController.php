@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ class BookController extends AbstractController
 {
     /**
      * @Route("/", name="book_index", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function index(BookRepository $bookRepository): Response
     {
@@ -27,6 +29,7 @@ class BookController extends AbstractController
 
     /**
      * @Route("/new", name="book_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -50,6 +53,7 @@ class BookController extends AbstractController
 
     /**
      * @Route("/{id}", name="book_show", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function show(Book $book): Response
     {
@@ -59,7 +63,24 @@ class BookController extends AbstractController
     }
 
     /**
+     * @Route("/books_show", name="books_show", methods={"GET"})
+     */
+    public function showAll(BookRepository $bookRepository): Response
+    {
+        $template = 'book/showAll.html.twig';
+
+        $args =[
+            'books'=> $bookRepository->findAll(),
+        ];
+        return $this->render($template,$args);
+        /*'book/showAll.html.twig'*//*, [
+            'books' => $bookRepository->findAll(),
+        ]);*/
+    }
+
+    /**
      * @Route("/{id}/edit", name="book_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Book $book): Response
     {
@@ -82,6 +103,7 @@ class BookController extends AbstractController
 
     /**
      * @Route("/{id}", name="book_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Book $book): Response
     {
