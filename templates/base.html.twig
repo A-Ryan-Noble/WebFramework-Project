@@ -18,35 +18,34 @@
 <nav class="navbar navbar-expand-lg mb-5">
     <section class="mainBar">
         <ul class="navbar-nav ml-auto">
+
             {# if person is logged in their nav is this#}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {#<li class="nav-item" id="loggedIn">#}
+
             <li class="nav-item">
-                <a class="nav-link {% block loginSuccessfulPage %}{% endblock %}" href="{{ url('login_success')  }}">Logged in</a>
+                <a class="nav-link {% block homePage2 %}{% endblock %}" href="{{ url('homepage') }}">Home</a>
             </li>
 
-            {#<li class="nav-item">#}
-                {#<a class="nav-link {% block homePage %}{% endblock %}" href="{{ url('homepage') }}">Home</a>#}
-            {#</li>#}
-
-            {#admin user is logged in#}
-            {#{% if %}#}
             <li class="nav-item">
-                <a class="nav-link {% block usersPage %}{% endblock %}" href="{{ url('homepage') }}">Users</a>
+                <a class="nav-link {% block loginSuccessfulPage %}{% endblock %}" href="{{ url('loggedIn')  }}">Account</a>
             </li>
-            {#{% endif %}#}
 
-            {#user user is logged in#}
-            {#{% if %}#}
+            {#user with admin role is logged in #}
+            {% if is_granted('ROLE_ADMIN')%}
+                <li class="nav-item">
+                    <a class="nav-link {% block userPage %}{% endblock %}" href="{{ url('user_index') }}">Users</a>
+                </li>
+            {% endif %}
+
+            {#user with user role is logged in#}
             <li class="nav-item">
-                <a class="nav-link {% block booksPage %}{% endblock %}" href="{{ url('book_index') }}">Books</a>
+                <a class="nav-link {% block booksPage %}{% endblock %}" href="{{ url('all_books') }}">Books</a>
             </li>
-            {#{% endif %}#}
-
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('app_logout') }}">logout</a>
             </li>
+
             {% else %}
             {# non logged in person nav #}
             <ul class="navbar-nav ml-auto">
@@ -56,7 +55,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {% block bookPage %}{% endblock %}" href="{{ url('books_show') }}">Books</a>
+                    <a class="nav-link {% block bookPage %}{% endblock %}" href="{{ url('book_index') }}">Books</a>
                 </li>
 
                 <li class="nav-item">

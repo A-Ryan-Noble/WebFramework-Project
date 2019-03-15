@@ -23,6 +23,7 @@ security:
 
             logout:
                 path:   app_logout
+                target: /login
                 invalidate_session: true
 
             guard:

@@ -8,6 +8,8 @@ body
 
 h1,h2, h3, h4
 {
+    color: maroon;
+    /*color: mediumblue;*/
     font-family: Verdana, Georgia, serif, "Times New Roman";
     text-align:center;
 }
@@ -15,8 +17,8 @@ h1,h2, h3, h4
 #tables ,table, tr, th, td
 {
     background-color: #fafafa;
-    border: black solid;;
-    border-top: black solid;
+    border: 0.1rem black solid;;
+    border-top:black solid;
 }
 
 #tables ,th

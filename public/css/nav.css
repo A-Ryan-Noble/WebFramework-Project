@@ -33,9 +33,9 @@ nav a:hover
 
 nav a.current_page
 {
-    color: silver;
+    color: mediumblue;
+    /*color: silver;*/
     font-weight: bold;
-    /*font-size: 20px;*/
 }
 
 #loggedIn

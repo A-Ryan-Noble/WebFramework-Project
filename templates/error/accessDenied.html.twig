@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}error{% endblock %}
+{% block title %}Unauthorised{% endblock %}
 
 {% block body %}
-    <h1>Access Denied!</h1>
+    <h2 style="text-decoration: underline double">Access Denied!</h2>
 
-    <p>
-        Sorry you don't have access to the page you requested.
-        <br>
+    <p style="font-size: large">
+        Sorry you don't have access to the requested page
+        {#you requested.#}
+        <hr>
         <a href="{{ url('homepage') }}">Go to home page</a>
         <br>
-        <a href="{{ url('app_login') }}">Go back to Login</a>
+        <a href="{{ url('app_logout') }}">Login again</a>
     </p>
 {% endblock %}

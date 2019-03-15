@@ -30,14 +30,15 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/loginSuccess", name="login_success")
+     * @Route("/loggedIn", name="loggedIn")
      * @IsGranted("ROLE_USER")
      */
     public function loginSuccess()
     {
         $template = 'security/successfulLogin.html.twig';
 
-        $args = [];
+        $args = [
+        ];
 
         return $this->render($template, $args);
     }

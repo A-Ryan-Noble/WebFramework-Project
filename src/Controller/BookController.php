@@ -18,11 +18,21 @@ class BookController extends AbstractController
 {
     /**
      * @Route("/", name="book_index", methods={"GET"})
-     * @IsGranted("ROLE_USER")
      */
     public function index(BookRepository $bookRepository): Response
     {
         return $this->render('book/index.html.twig', [
+            'books' => $bookRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/books", name="all_books", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function showAll(BookRepository $bookRepository): Response
+    {
+        return $this->render('book/showAll.html.twig', [
             'books' => $bookRepository->findAll(),
         ]);
     }
@@ -60,22 +70,6 @@ class BookController extends AbstractController
         return $this->render('book/show.html.twig', [
             'book' => $book,
         ]);
-    }
-
-    /**
-     * @Route("/books_show", name="books_show", methods={"GET"})
-     */
-    public function showAll(BookRepository $bookRepository): Response
-    {
-        $template = 'book/showAll.html.twig';
-
-        $args =[
-            'books'=> $bookRepository->findAll(),
-        ];
-        return $this->render($template,$args);
-        /*'book/showAll.html.twig'*//*, [
-            'books' => $bookRepository->findAll(),
-        ]);*/
     }
 
     /**

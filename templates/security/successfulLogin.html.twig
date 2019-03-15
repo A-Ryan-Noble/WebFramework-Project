@@ -5,9 +5,9 @@
 {% block title %}Logged in{% endblock %}
 
 {% block body %}
-    <h4>
-        You are logged in as:
-    </h4>
+    <h5>
+        You are account details are as follows:
+    </h5>
 
     <br>
 
@@ -15,14 +15,16 @@
         <tbody>
         <tr>
             <th>Username:</th>
-            <th>Role:</th>
+            <th>Role(s):</th>
         </tr>
         <tr>
             <td>{{ app.user.username}}</td>
             <td>
-                {% for role in  app.user.roles %}
-                    {{ role }}
-                {% endfor %}
+                <ol>
+                    {% for role in  app.user.roles %}
+                        <li>{{ role }}</li>
+                    {% endfor %}
+                </ol>
             </td>
         </tr>
         </tbody>

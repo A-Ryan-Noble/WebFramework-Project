@@ -6,22 +6,22 @@
 {% block body %}
     <form method="post">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        {% if error %}
-            <div class="flash-error">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-            </div>
-        {% endif %}
-        <h2>Login</h2>
-        Username:
-        <input value="{{ last_username }}" name="username" id="inputUsername" autofocus>
+        <h4> Please enter your details:</h4>
+        Username:<span style="padding-left: 1rem"></span>
+        <input value="{{ last_username }}" name="username" id="inputUsername" autofocus style="padding-left: 1rem">
         <p>
-            Password:
-            <input type="password" name="password" id="inputPassword">
+            Password:<span style="padding-left: 1.3rem"></span>
+            <input type="password" name="password" id="inputPassword" style="padding-left: 1rem">
         <p>
             <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}"
             >
             <button type="submit">Login</button>
         </p>
+        {% if error %}
+            <div class="flash-error">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
     </form>
 {% endblock %}
