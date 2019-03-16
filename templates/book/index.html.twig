@@ -18,6 +18,7 @@
                 <th>StartingBid</th>
                 <th>Bid</th>
                 <th>BidAccepted</th>
+                <th>Owner:</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
                 <td>{{ book.startingBid }}</td>
                 <td>{{ book.bid }}</td>
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
+                <td>{{ book.ownedBy }}</td>
             </tr>
         {% else %}
             <tr>

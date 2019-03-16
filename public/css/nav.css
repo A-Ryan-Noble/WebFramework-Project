@@ -5,14 +5,6 @@ nav, nav.mainBar
     font-family:Verdana, Arial, "sans-serif";
 }
 
-/*nav ul li*/
-/*{*/
-    /*display: inline;                !* one bar across*!*/
-    /*list-style-type:none;           !* removes the list apperance *!*/
-    /*text-decoration: none;*/
-    /*color: white;*/
-/*}*/
-
 nav a:link
 {
     color: white;
@@ -22,7 +14,7 @@ nav a:link
 
 nav a:visited
 {
-    color: yellow; /* nav turns once it's visited */
+    color: greenyellow;
     text-decoration: none;
 }
 nav a:hover
@@ -34,13 +26,5 @@ nav a:hover
 nav a.current_page
 {
     color: mediumblue;
-    /*color: silver;*/
     font-weight: bold;
 }
-
-#loggedIn
-{
-    font-size: 1rem;
-    color: sienna;
-    font-weight: bold;
-}n
