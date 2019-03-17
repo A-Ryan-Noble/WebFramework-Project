@@ -19,6 +19,7 @@
                 <th>Bid</th>
                 <th>Bid Accepted</th>
                 <th>Comment/Question</th>
+                <th>Reply/Answer</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,7 @@
                 <td>€{{ book.bid }}</td>
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
                 <td>{{ book.commentQuestion }}</td>
+                <td>{{ book.answerQs }}</td>
             </tr>
         {% else %}
             <tr>

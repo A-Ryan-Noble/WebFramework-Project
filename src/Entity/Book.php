@@ -59,9 +59,14 @@ class Book
     private $ownedBy;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $commentQuestion;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $answerQs;
 
     public function __construct()
     {
@@ -196,6 +201,18 @@ class Book
     public function setCommentQuestion(string $commentQuestion): self
     {
         $this->commentQuestion = $commentQuestion;
+
+        return $this;
+    }
+
+    public function getAnswerQs(): ?string
+    {
+        return $this->answerQs;
+    }
+
+    public function setAnswerQs(?string $answerQs): self
+    {
+        $this->answerQs = $answerQs;
 
         return $this;
     }

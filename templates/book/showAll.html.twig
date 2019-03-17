@@ -12,13 +12,14 @@
         <tr>
             <th>Id</th>
             <th>Title</th>
-            <th>Barcode</th>
             <th>Author</th>
+            <th>Barcode</th>
             <th>Genre</th>
             <th>StartingBid</th>
             <th>Bid</th>
             <th>Bid Accepted</th>
             <th>Comment/Question</th>
+            <th>Reply/Answer</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -27,16 +28,17 @@
             <tr>
                 <td>{{ book.id }}</td>
                 <td>{{ book.title }}</td>
-                <td>{{ book.barcode }}</td>
                 <td>{{ book.author }}</td>
+                <td>{{ book.barcode }}</td>
                 <td>{{ book.genre }}</td>
                 <td>€{{ book.startingBid }}</td>
                 <td>€{{ book.bid }}</td>
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
                 <td>{{ book.commentQuestion }}</td>
+                <td>{{ book.answerQs }}</td>
                 <td>
-                    <a href="{{ path('book_show', {'id': book.id}) }}">show</a>
-                    <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
+                    <a href="{{ url('book_show', {'id': book.id}) }}">show</a>
+                    <a href="{{ url('book_edit', {'id': book.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

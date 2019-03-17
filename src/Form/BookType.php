@@ -20,6 +20,7 @@ class BookType extends AbstractType
             ->add('bid')
             ->add('bidAccepted')
             ->add('commentQuestion')
+            ->add('answerQs')
         ;
     }
 
