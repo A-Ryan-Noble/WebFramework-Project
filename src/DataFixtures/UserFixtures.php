@@ -34,6 +34,7 @@ class UserFixtures extends Fixture
         $book1->setStartingBid(22.45);
         $book1->setBid(0);
         $book1->setBidAccepted(false);
+        $book1->setCommentQuestion("");
         $book1->addOwnedBy($userUser);
 
         $userUser->setBooksOwned($book1);
@@ -50,6 +51,7 @@ class UserFixtures extends Fixture
         $book2->setStartingBid(17.75);
         $book2->setBid(0);
         $book2->setBidAccepted(false);
+        $book2->setCommentQuestion("");
 
         $book2->addOwnedBy($userAdmin);
 
@@ -118,6 +120,7 @@ class UserFixtures extends Fixture
         $book->setStartingBid($faker->randomFloat(2, 4, 100)); // random float num *.** from 4 to 100
         $book->setBid(0);
         $book->setBidAccepted(false);
+        $book->setCommentQuestion("");
         $book->addOwnedBy($user);
 
         return $book;

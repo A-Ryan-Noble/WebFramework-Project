@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block bookPage %} current_page {% endblock %}
+{% block booksPage %} current_page {% endblock %}
 
 {% block title %}Book Catalog{% endblock %}
 
@@ -17,8 +17,8 @@
                 <th>Genre</th>
                 <th>StartingBid</th>
                 <th>Bid</th>
-                <th>BidAccepted</th>
-                <th>Owner:</th>
+                <th>Bid Accepted</th>
+                <th>Comment/Question</th>
             </tr>
         </thead>
         <tbody>
@@ -29,14 +29,14 @@
                 <td>{{ book.barcode }}</td>
                 <td>{{ book.author }}</td>
                 <td>{{ book.genre }}</td>
-                <td>{{ book.startingBid }}</td>
-                <td>{{ book.bid }}</td>
+                <td>€{{ book.startingBid }}</td>
+                <td>€{{ book.bid }}</td>
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
-                <td>{{ book.ownedBy }}</td>
+                <td>{{ book.commentQuestion }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="10">No books found</td>
             </tr>
         {% endfor %}
         </tbody>

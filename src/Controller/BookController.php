@@ -52,7 +52,7 @@ class BookController extends AbstractController
             $entityManager->persist($book);
             $entityManager->flush();
 
-            return $this->redirectToRoute('book_index');
+            return $this->redirectToRoute('all_books');
         }
 
         return $this->render('book/new.html.twig', [
@@ -84,7 +84,7 @@ class BookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('book_index', [
+            return $this->redirectToRoute('all_books', [
                 'id' => $book->getId(),
             ]);
         }
@@ -107,6 +107,6 @@ class BookController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('book_index');
+        return $this->redirectToRoute('all_books');
     }
 }

@@ -17,8 +17,9 @@
             <th>Genre</th>
             <th>StartingBid</th>
             <th>Bid</th>
-            <th>BidAccepted</th>
-            <th>actions</th>
+            <th>Bid Accepted</th>
+            <th>Comment/Question</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -29,9 +30,10 @@
                 <td>{{ book.barcode }}</td>
                 <td>{{ book.author }}</td>
                 <td>{{ book.genre }}</td>
-                <td>{{ book.startingBid }}</td>
-                <td>{{ book.bid }}</td>
+                <td>€{{ book.startingBid }}</td>
+                <td>€{{ book.bid }}</td>
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
+                <td>{{ book.commentQuestion }}</td>
                 <td>
                     <a href="{{ path('book_show', {'id': book.id}) }}">show</a>
                     <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
@@ -39,11 +41,11 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="10">No records were found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('book_new') }}">Create new</a>
+    <a href="{{ url('book_new') }}">Create new</a>
 {% endblock %}

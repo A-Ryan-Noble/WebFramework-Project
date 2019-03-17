@@ -58,6 +58,11 @@ class Book
      */
     private $ownedBy;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $commentQuestion;
+
     public function __construct()
     {
         $this->ownedBy = new ArrayCollection();
@@ -179,6 +184,18 @@ class Book
                 $ownedBy->setBooksOwned(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCommentQuestion(): ?string
+    {
+        return $this->commentQuestion;
+    }
+
+    public function setCommentQuestion(string $commentQuestion): self
+    {
+        $this->commentQuestion = $commentQuestion;
 
         return $this;
     }
