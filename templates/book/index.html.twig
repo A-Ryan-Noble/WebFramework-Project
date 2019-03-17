@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block booksPage %} current_page {% endblock %}
+{% block bookPage %} current_page {% endblock %}
 
 {% block title %}Book Catalog{% endblock %}
 
@@ -18,8 +18,9 @@
                 <th>StartingBid</th>
                 <th>Bid</th>
                 <th>Bid Accepted</th>
-                <th>Comment/Question</th>
-                <th>Reply/Answer</th>
+              {#  <th>Comment/Question</th>
+                <th>Reply/Answer</th>#}
+                <th>View Product</th>
             </tr>
         </thead>
         <tbody>
@@ -33,8 +34,10 @@
                 <td>€{{ book.startingBid }}</td>
                 <td>€{{ book.bid }}</td>
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
-                <td>{{ book.commentQuestion }}</td>
-                <td>{{ book.answerQs }}</td>
+{#                <td>{{ book.commentQuestion }}</td>
+                <td>{{ book.answerQs }}</td>#}
+                <td><a href="{{ url('book_show', {'id': book.id}) }}">More Details</a> </td>
+
             </tr>
         {% else %}
             <tr>

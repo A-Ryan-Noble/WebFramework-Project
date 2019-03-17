@@ -3,59 +3,66 @@
 {% block booksPage %} current_page {% endblock %}
 
 
-{% block title %}Book{% endblock %}
+{% block title %}Showing Book{% endblock %}
 
 {% block body %}
-    <h1>Book</h1>
+    <h1>Details of the Book: </h1>
+
+    <br>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ book.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ book.title }}</td>
-            </tr>
-            <tr>
-                <th>Author</th>
-                <td>{{ book.author }}</td>
-            </tr>
-            <tr>
-                <th>Barcode</th>
-                <td>{{ book.barcode }}</td>
-            </tr>
-            <tr>
-                <th>Genre</th>
-                <td>{{ book.genre }}</td>
-            </tr>
-            <tr>
-                <th>StartingBid</th>
-                <td>{{ book.startingBid }}</td>
-            </tr>
-            <tr>
-                <th>Bid</th>
-                <td>{{ book.bid }}</td>
-            </tr>
-            <tr>
-                <th>BidAccepted</th>
-                <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>CommentQuestion</th>
-                <td>{{ book.commentQuestion }}</td>
-            </tr>
-            <tr>
-                <th>Reply/Answer</th>
-                <td>{{ book.answerQs }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ book.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ book.title }}</td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>{{ book.author }}</td>
+        </tr>
+        <tr>
+            <th>Barcode</th>
+            <td>{{ book.barcode }}</td>
+        </tr>
+        <tr>
+            <th>Genre</th>
+            <td>{{ book.genre }}</td>
+        </tr>
+        <tr>
+            <th>StartingBid</th>
+            <td>{{ book.startingBid }}</td>
+        </tr>
+        <tr>
+            <th>Bid</th>
+            <td>{{ book.bid }}</td>
+        </tr>
+        <tr>
+            <th>Bid Accepted</th>
+            <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>Comments</th>
+            <td>{{ book.commentQuestion }}</td>
+        </tr>
+        <tr>
+            <th>Replies</th>
+            <td>{{ book.answerQs }}</td>
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('all_books') }}">back to list</a>
+    {% if is_granted('ROLE_USER')%}
+        <a href="{{ url('all_books') }}">Back to list</a>
 
-    <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
+        <a href="{{ url('book_edit', {'id': book.id}) }}">edit</a>
 
-    {{ include('book/_delete_form.html.twig') }}
+        {{ include('book/_delete_form.html.twig') }}
+    {% else %}
+        <a href="{{ url('book_index') }}">back to list</a>
+    {% endif %}
+
 {% endblock %}

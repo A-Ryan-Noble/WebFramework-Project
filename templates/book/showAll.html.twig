@@ -18,8 +18,8 @@
             <th>StartingBid</th>
             <th>Bid</th>
             <th>Bid Accepted</th>
-            <th>Comment/Question</th>
-            <th>Reply/Answer</th>
+            <th>Comments</th>
+            <th>Replies</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -37,13 +37,13 @@
                 <td>{{ book.commentQuestion }}</td>
                 <td>{{ book.answerQs }}</td>
                 <td>
-                    <a href="{{ url('book_show', {'id': book.id}) }}">show</a>
+                    <a href="{{ url('book_show', {'id': book.id}) }}">View</a>
                     <a href="{{ url('book_edit', {'id': book.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">No records were found</td>
+                <td colspan="10">No books were found</td>
             </tr>
         {% endfor %}
         </tbody>

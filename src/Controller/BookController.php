@@ -60,10 +60,8 @@ class BookController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/{id}", name="book_show", methods={"GET"})
-     * @IsGranted("ROLE_USER")
      */
     public function show(Book $book): Response
     {
