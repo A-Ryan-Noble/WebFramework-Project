@@ -9,19 +9,20 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Barcode</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>StartingBid</th>
-                <th>Bid</th>
-                <th>Bid Accepted</th>
-              {#  <th>Comment/Question</th>
-                <th>Reply/Answer</th>#}
-                <th>View Product</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Barcode</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>StartingBid</th>
+            <th>Bid</th>
+            <th>Bid Accepted</th>
+            <th>Owner</th>
+            {#  <th>Comment/Question</th>
+              <th>Reply/Answer</th>#}
+            <th>View Product</th>
+        </tr>
         </thead>
         <tbody>
         {% for book in books %}
@@ -34,8 +35,9 @@
                 <td>€{{ book.startingBid }}</td>
                 <td>€{{ book.bid }}</td>
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
-{#                <td>{{ book.commentQuestion }}</td>
-                <td>{{ book.answerQs }}</td>#}
+                <td>{{ book.user }}</td>
+                {#                <td>{{ book.commentQuestion }}</td>
+                                <td>{{ book.answerQs }}</td>#}
                 <td><a href="{{ url('book_show', {'id': book.id}) }}">More Details</a> </td>
 
             </tr>

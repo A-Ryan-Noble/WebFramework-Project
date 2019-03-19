@@ -2,8 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+//use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,11 +53,6 @@ class Book
     private $bidAccepted;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="booksOwned")
-     */
-    private $ownedBy;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $commentQuestion;
@@ -68,10 +62,11 @@ class Book
      */
     private $answerQs;
 
-    public function __construct()
-    {
-        $this->ownedBy = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="user")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -162,37 +157,6 @@ class Book
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getOwnedBy(): Collection
-    {
-        return $this->ownedBy;
-    }
-
-    public function addOwnedBy(User $ownedBy): self
-    {
-        if (!$this->ownedBy->contains($ownedBy)) {
-            $this->ownedBy[] = $ownedBy;
-            $ownedBy->setBooksOwned($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOwnedBy(User $ownedBy): self
-    {
-        if ($this->ownedBy->contains($ownedBy)) {
-            $this->ownedBy->removeElement($ownedBy);
-            // set the owning side to null (unless already changed)
-            if ($ownedBy->getBooksOwned() === $this) {
-                $ownedBy->setBooksOwned(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCommentQuestion(): ?string
     {
         return $this->commentQuestion;
@@ -213,6 +177,18 @@ class Book
     public function setAnswerQs(?string $answerQs): self
     {
         $this->answerQs = $answerQs;
+
+        return $this;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -20,6 +20,7 @@
             <th>Bid Accepted</th>
             <th>Comments</th>
             <th>Replies</th>
+            <th>Owner</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -36,6 +37,7 @@
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
                 <td>{{ book.commentQuestion }}</td>
                 <td>{{ book.answerQs }}</td>
+                <td>{{ book.user }}</td>
                 <td>
                     <a href="{{ url('book_show', {'id': book.id}) }}">View</a>
                     <a href="{{ url('book_edit', {'id': book.id}) }}">edit</a>
@@ -49,5 +51,14 @@
         </tbody>
     </table>
 
-    <a href="{{ url('book_new') }}">Create new</a>
+    <br>
+
+    <table class="table">
+        <tbody>
+        <tr style="text-align: center">
+            <th>Wish to create a new Book? <a href="{{ url('book_new') }}" style="padding-left: 5rem"> Create</a></th>
+        </tr>
+        </tbody>
+    </table>
+
 {% endblock %}

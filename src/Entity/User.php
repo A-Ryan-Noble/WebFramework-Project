@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,9 +36,14 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Book", inversedBy="ownedBy")
+     * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="user")
      */
-    private $booksOwned;
+    private $books;
+
+    public function __construct()
+    {
+        $this->books = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -66,11 +72,7 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->roles;
     }
 
     public function setRoles(array $roles): self
@@ -112,15 +114,39 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getBooksOwned(): ?Book
+    /**
+     * @return Collection|Book[]
+     */
+    public function getBooks(): Collection
     {
-        return $this->booksOwned;
+        return $this->books;
     }
 
-    public function setBooksOwned(?Book $booksOwned): self
+    public function addBooks(Book $books): self
     {
-        $this->booksOwned = $booksOwned;
+        if (!$this->books->contains($books)) {
+            $this->books[] = $books;
+            $books->setUser($this);
+        }
 
         return $this;
+    }
+
+    public function removeBooks(Book $books): self
+    {
+        if ($this->books->contains($books)) {
+            $this->books->removeElement($books);
+            // set the owning side to null (unless already changed)
+            if ($books->getUser() === $this) {
+                $books->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->username.' ';
     }
 }

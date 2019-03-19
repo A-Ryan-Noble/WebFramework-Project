@@ -11,58 +11,71 @@
     <br>
 
     <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ book.id }}</td>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <td>{{ book.title }}</td>
-        </tr>
-        <tr>
-            <th>Author</th>
-            <td>{{ book.author }}</td>
-        </tr>
-        <tr>
-            <th>Barcode</th>
-            <td>{{ book.barcode }}</td>
-        </tr>
-        <tr>
-            <th>Genre</th>
-            <td>{{ book.genre }}</td>
-        </tr>
-        <tr>
-            <th>StartingBid</th>
-            <td>{{ book.startingBid }}</td>
-        </tr>
-        <tr>
-            <th>Bid</th>
-            <td>{{ book.bid }}</td>
-        </tr>
-        <tr>
-            <th>Bid Accepted</th>
-            <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>Comments</th>
-            <td>{{ book.commentQuestion }}</td>
-        </tr>
-        <tr>
-            <th>Replies</th>
-            <td>{{ book.answerQs }}</td>
-        </tr>
-        </tbody>
-    </table>
-
+    <tbody>
+    <tr>
+        <th>Id</th>
+        <td>{{ book.id }}</td>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <td>{{ book.title }}</td>
+    </tr>
+    <tr>
+        <th>Author</th>
+        <td>{{ book.author }}</td>
+    </tr>
+    <tr>
+        <th>Barcode</th>
+        <td>{{ book.barcode }}</td>
+    </tr>
+    <tr>
+        <th>Genre</th>
+        <td>{{ book.genre }}</td>
+    </tr>
+    <tr>
+        <th>StartingBid</th>
+        <td>{{ book.startingBid }}</td>
+    </tr>
+    <tr>
+        <th>Bid</th>
+        <td>{{ book.bid }}</td>
+    </tr>
+    <tr>
+        <th>Bid Accepted</th>
+        <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
+    </tr>
+    <tr>
+        <th>Comments</th>
+        <td>{{ book.commentQuestion }}</td>
+    </tr>
+    <tr>
+        <th>Replies</th>
+        <td>{{ book.answerQs }}</td>
+    </tr>
+    {#</tbody>
+</table>
+#}
     {% if is_granted('ROLE_USER')%}
-        <a href="{{ url('all_books') }}">Back to list</a>
+        <tr>
+            <th>Actions:</th>
+            <td>
+                <h4 style="text-align: left"><a href="{{ url('book_edit', {'id': book.id}) }}">Edit</a></h4>
+                {{ include('book/_delete_form.html.twig') }}
+            </td>
+        </tr>
 
-        <a href="{{ url('book_edit', {'id': book.id}) }}">edit</a>
+        </tbody>
+        </table>
 
-        {{ include('book/_delete_form.html.twig') }}
+        <hr>
+
+        <h4><a href="{{ url('all_books') }}">Back to Catalog page</a><br></h4>
     {% else %}
-        <a href="{{ url('book_index') }}">back to list</a>
+
+        </tbody>
+        </table>
+
+        <h4><a href="{{ url('book_index') }}">Back to Book catalog</a></h4>
     {% endif %}
 
 {% endblock %}

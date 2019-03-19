@@ -36,6 +36,20 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
+
+
+/*        print '<pre>';
+        if($form->isValid()){
+            print 'form is valid';
+        } else {
+            print 'form NOT valid';
+        }
+
+        print PHP_EOL;
+
+        var_dump($user);
+        die();*/
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

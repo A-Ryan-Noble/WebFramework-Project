@@ -5,9 +5,54 @@
 {% block title %}New User{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
+    <h1>Create a new User</h1>
 
-    {{ include('user/_form.html.twig') }}
+    {{ form_start(form) }}
 
-    <a href="{{ path('user_index') }}">back to list</a>
+    <div>
+        <div class="errors">
+            {{ form_errors(form.username) }}
+        </div>
+
+        {{ form_label(form.username) }}
+
+        {{ form_widget(form.username) }}
+    </div>
+
+    <div>
+        <div class="errors">
+            {{ form_errors(form.roles) }}
+        </div>
+
+        {{ form_label(form.roles) }}
+
+        <select name="user[roles]" multiple size="2">
+            <option value="ROLE_USER">ROLE_USER</option>
+            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+        </select>
+
+        <input type='checkbox' name='user[roles]' value='ROLE_ADMIN' />
+
+        <!-- {{ form_widget(form.roles) }} -->
+    </div>
+
+    <div>
+        <div class="errors">
+            {{ form_errors(form.password) }}
+        </div>
+
+        {{ form_label(form.password) }}
+
+        {{ form_widget(form.password) }}
+    </div>
+
+    {#<div>
+        {{ form_row(form.save) }}
+    </div>#}
+
+    {{ form_end(form) }}
+
+    {#{{ include('user/_form.html.twig') }}#}
+
+    <h5><a href="{{ path('user_index') }}">Go back to the list</a></h5>
 {% endblock %}

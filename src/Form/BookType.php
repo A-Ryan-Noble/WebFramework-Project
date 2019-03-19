@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Book;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +23,10 @@ class BookType extends AbstractType
             ->add('bidAccepted')
             ->add('commentQuestion')
             ->add('answerQs')
-        ;
+            ->add('user',EntityType::class,[
+                'class'=>User::class,
+                'choice_label'=>'username',
+            ]); ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -27,7 +27,7 @@ class UserFixtures extends Fixture
 
         $book1 = new Book();
 
-        $book1->setTitle("Java for Beginniners");
+        $book1->setTitle("Java for Beginners");
         $book1->setAuthor("Jake Patrck");
         $book1->setGenre("Educational");
         $book1->setBarcode("q4f7j03");
@@ -36,9 +36,9 @@ class UserFixtures extends Fixture
         $book1->setBidAccepted(false);
 //        $book1->setCommentQuestion("");
 //        $book1->setAnswerQs("");
-        $book1->addOwnedBy($userUser);
+        $book1->setUser($userUser);
 
-        $userUser->setBooksOwned($book1);
+        $userUser->addBooks($book1);
         $manager->persist($book1);
 
         $userAdmin = $this->createUser('admin', 'admin', ['ROLE_ADMIN']);
@@ -55,9 +55,9 @@ class UserFixtures extends Fixture
 //        $book2->setCommentQuestion("");
 //        $book2->setAnswerQs("");
 
-        $book2->addOwnedBy($userAdmin);
+        $book2->setUser($userAdmin);
 
-        $userAdmin->setBooksOwned($book2);
+        $userAdmin->addBooks($book2);
         $manager->persist($book2);
 
         $manager->persist($userUser);
@@ -72,10 +72,6 @@ class UserFixtures extends Fixture
             $User_pass = $faker->sentence(1);
             $User_Role = $faker->randomElement([['ROLE_USER'], ['ROLE_ADMIN']]);
 
-            /*         $User= $this->createUser($User_name,$User_pass,$User_Role);
-
-                           $User = $this->createUser($faker->name,$faker->sentence(1),$faker->randomElement([' '],['ROLE_ADMIN']));*/
-
             $user->setUsername($User_name);
             $user->setRoles($User_Role);
 
@@ -85,7 +81,7 @@ class UserFixtures extends Fixture
 
             // book assigned to the user
             $User_book = $this->createBookForUser($user);
-            $user->setBooksOwned($User_book);
+            $user->addBooks($User_book);
 
             $manager->persist($User_book);
 
@@ -125,8 +121,7 @@ class UserFixtures extends Fixture
 //        $book->setCommentQuestion("");
 //        $book->setAnswerQs("");
 
-        $book->addOwnedBy($user);
-
+        $book->setUser($user);
 
         return $book;
     }

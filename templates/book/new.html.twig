@@ -5,9 +5,124 @@
 {% block title %}New Book{% endblock %}
 
 {% block body %}
-    <h1>Create new Book</h1>
+    <h1>Create a new Book</h1>
 
-    {{ include('book/_form.html.twig') }}
+    {{ form_start(form) }}
 
-    <a href="{{ path('all_books') }}">back to list</a>
+    <div>
+        <div class="error">
+            {{ form_errors(form.title) }}
+        </div>
+
+        {{ form_label(form.title) }}
+
+        {{ form_widget(form.title) }}
+    </div>
+
+    <div>
+        <div class="error">
+            {{ form_errors(form.author) }}
+        </div>
+
+        {{ form_label(form.author) }}
+
+        {{ form_widget(form.author) }}
+    </div>
+
+    <div>
+        <div class="error">
+            {{ form_errors(form.barcode) }}
+        </div>
+
+        {{ form_label(form.barcode) }}
+
+        {{ form_widget(form.barcode) }}
+    </div>
+
+    <div>
+        <div class="error">
+            {{ form_errors(form.genre) }}
+        </div>
+
+        {{ form_label(form.genre) }}
+
+        {{ form_widget(form.genre) }}
+    </div>
+
+    <div>
+        <div class="error">
+            {{ form_errors(form.startingBid) }}
+        </div>
+
+        {{ form_label(form.startingBid) }}
+
+        {{ form_widget(form.startingBid) }}
+    </div>
+
+    <div>
+        <div class="error">
+            {{ form_errors(form.bid) }}
+        </div>
+
+        {{ form_label(form.bid) }}
+
+        {{ form_widget(form.bid) }}
+    </div>
+
+    <div>
+        <div class="error">
+            {{ form_errors(form.bidAccepted) }}
+        </div>
+
+        {{ form_label(form.bidAccepted) }}
+
+        {{ form_widget(form.bidAccepted) }}
+    </div>
+
+    <div>
+        <div class="error">
+            {{ form_errors(form.commentQuestion) }}
+        </div>
+
+        {{ form_label(form.commentQuestion) }}
+
+        {{ form_widget(form.commentQuestion) }}
+    </div>
+
+    <div>
+        <div class="error">
+            {{ form_errors(form.answerQs) }}
+        </div>
+
+        {{ form_label(form.answerQs) }}
+
+        {{ form_widget(form.answerQs) }}
+    </div>
+
+{#
+    <div>
+        <div class="error">
+            {{ form_errors(form.ownedBy) }}
+        </div>
+
+        {{ form_label(form.ownedBy) }}
+
+        {{ form_widget(form.ownedBy) }}
+    </div>
+
+#}
+
+{#
+    <div>
+        {{ form_row(form.save) }}
+    </div>
+#}
+
+    {{ form_end(form) }}
+
+    {#{{ include('book/_form.html.twig') }}#}
+
+    <br>
+
+    <h5><a href="{{ path('all_books') }}">Go Back to the Catalog</a></h5>
 {% endblock %}
