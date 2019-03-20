@@ -9,7 +9,7 @@
 
     <table class="table">
         <thead>
-        <tr>
+        <tr >
             <th>Id</th>
             <th>Title</th>
             <th>Author</th>
@@ -17,7 +17,7 @@
             <th>Genre</th>
             <th>StartingBid</th>
             <th>Bid</th>
-            <th>Bid Accepted</th>
+            <th>Accepted?</th>
             <th>Comments</th>
             <th>Replies</th>
             <th>Owner</th>
@@ -27,20 +27,20 @@
         <tbody>
         {% for book in books %}
             <tr>
-                <td>{{ book.id }}</td>
+                <td><strong>{{ book.id }}</strong></td>
                 <td>{{ book.title }}</td>
                 <td>{{ book.author }}</td>
                 <td>{{ book.barcode }}</td>
                 <td>{{ book.genre }}</td>
-                <td>€{{ book.startingBid }}</td>
-                <td>€{{ book.bid }}</td>
+                <td><strong>€</strong> {{ book.startingBid }}</td>
+                <td><strong>€</strong> {{ book.bid }}</td>
                 <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
                 <td>{{ book.commentQuestion }}</td>
                 <td>{{ book.answerQs }}</td>
                 <td>{{ book.user }}</td>
                 <td>
                     <a href="{{ url('book_show', {'id': book.id}) }}">View</a>
-                    <a href="{{ url('book_edit', {'id': book.id}) }}">edit</a>
+                    {#<a href="{{ url('book_edit', {'id': book.id}) }}">edit</a>#}
                 </td>
             </tr>
         {% else %}

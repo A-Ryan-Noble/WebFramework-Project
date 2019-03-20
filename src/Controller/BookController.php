@@ -10,6 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\FormTypeInterface;
+
+
+// Custom create and edit type
+use App\Form\BookType2;
 
 /**
  * @Route("/book")
@@ -38,14 +43,22 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="book_new", methods={"GET","POST"})
+     * @Route("/new", name="book_new", methods={"POST", "GET"})
      * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
         $book = new Book();
-        $form = $this->createForm(BookType::class, $book);
+
+        $book->setBid(0); // For aesthetic in tables
+
+        $book->setUser($this->getUser()); // Logged in user is default choice
+
+        $book->setBidAccepted(false); // set false here to avoid choose un the form
+
+        $form = $this->createForm(BookType2::class, $book);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();

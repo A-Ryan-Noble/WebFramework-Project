@@ -14,6 +14,10 @@ h1,h2, h3, h4
     text-align:center;
 }
 
+#tables ,table
+{
+    text-align: center;
+}
 #tables ,table, tr, th, td
 {
     background-color: #fafafa;
@@ -24,4 +28,9 @@ h1,h2, h3, h4
 #tables ,th
 {
     color: orangered
+}
+
+.newForm
+{
+    padding-bottom: 1rem;
 }
