@@ -30,7 +30,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/loggedIn", name="loggedIn")
+     * @Route("/account", name="loggedIn")
      * @IsGranted("ROLE_USER")
      */
     public function loginSuccess()

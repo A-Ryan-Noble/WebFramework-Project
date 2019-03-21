@@ -5,54 +5,51 @@
 {% block title %}New User{% endblock %}
 
 {% block body %}
-    <h1>Create a new User</h1>
+    <h2>Create a new User</h2>
 
-    {{ form_start(form) }}
+    <h5> Fill out the form details below:</h5>
+    <br>
 
-    <div>
-        <div class="errors">
-            {{ form_errors(form.username) }}
-        </div>
+<form method="POST">
 
-        {{ form_label(form.username) }}
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Username:</th>
+            <td>
+                <input type="text" name="userName" required>
+            </td>
+        </tr>
+        <tr>
+            <th>Password:</th>
+            <td>
+                <input type="password" name="pass" required>
+            </td>
+        </tr>
+        <tr>
+            <th>Their Role:</th>
+            <td>
+                <select name="roleInput" required>
+                    <option value="ROLE_USER">ROLE_USER</option>
+                    <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                </select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-        {{ form_widget(form.username) }}
-    </div>
+    <p align="center">
+        <button class="btn">Create</button>
+    </p>
 
-    <div>
-        <div class="errors">
-            {{ form_errors(form.roles) }}
-        </div>
+</form>
 
-        {{ form_label(form.roles) }}
+    {#{% if error %}#}
+        {#<div class="flash-error">#}
+            {#{{ error}}#}
+        {#</div>#}
+    {#{% endif %}#}
 
-        <select name="user[roles]" multiple size="2">
-            <option value="ROLE_USER">ROLE_USER</option>
-            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
-        </select>
-
-        <input type='checkbox' name='user[roles]' value='ROLE_ADMIN' />
-
-        <!-- {{ form_widget(form.roles) }} -->
-    </div>
-
-    <div>
-        <div class="errors">
-            {{ form_errors(form.password) }}
-        </div>
-
-        {{ form_label(form.password) }}
-
-        {{ form_widget(form.password) }}
-    </div>
-
-    {#<div>
-        {{ form_row(form.save) }}
-    </div>#}
-
-    {{ form_end(form) }}
-
-    {#{{ include('user/_form.html.twig') }}#}
-
+    <hr>
     <h5><a href="{{ path('user_index') }}">Go back to the list</a></h5>
 {% endblock %}

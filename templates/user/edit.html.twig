@@ -7,9 +7,50 @@
 {% block body %}
     <h1>Edit User</h1>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    <br>
 
-    <a href="{{ path('user_index') }}">back to list</a>
+    <form method="POST">
 
-    {{ include('user/_delete_form.html.twig') }}
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Username:</th>
+            <td>
+                <input type="text" name="userName" required value="{{ user.username }}">
+            </td>
+        </tr>
+        <tr>
+            <th>Password:</th>
+            <td>
+                <input type="password" name="pass" required value="{{ user.password }}">
+            </td>
+        </tr>
+        <tr>
+            <th>Their Role:</th>
+            <td>
+                <select name="roleInput" required>
+                    {% if user.roles[0] == "ROLE_ADMIN" %}
+
+                        <option value="{{ user.roles[0] }}">{{ user.roles[0]}}</option>
+                        <option value="ROLE_USER">ROLE_USER</option>
+
+                    {% else %}
+                        <option value="{{ user.roles[0] }}">{{ user.roles[0]}}</option>
+                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                    {% endif %}
+                </select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p align="center">
+        <button class="btn">Update Details</button>
+    </p>
+
+    </form>
+
+    <hr>
+    <h5><a href="{{ path('user_index') }}">Go back to the list</a></h5>
+
 {% endblock %}

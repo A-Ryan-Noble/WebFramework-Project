@@ -27,7 +27,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {% block loginSuccessfulPage %}{% endblock %}" href="{{ url('loggedIn')  }}">Account</a>
+                <a class="nav-link {% block accountPage %}{% endblock %}" href="{{ url('loggedIn')  }}">Account</a>
             </li>
 
             {#user with admin role is logged in #}
@@ -63,20 +63,9 @@
                 </li>
                 {% endif %}
             </ul>
-    </section>
-</nav>
-
-{#nav>
-    <section class= "mainBar">
-        <ul>
-            <li><a href="{{ url('homepage') }}" class="{% block homePage %}{% endblock %}"> Home</a></li>
-#}{#
-            <li><a href="{{ path('gallery') }}" class="{% block galleryPage %}{% endblock %}"> Gallery</a></li>
-#}{#
-            #}{#<li><a href="{{ url('user') }}" class="{% block accountPage %}{% endblock %}"> Account</a></li>#}{#
-            <li><a href="{{ url('app_login')}}" class="{% block loginPage %} {% endblock %}">Login</a></li>
         </ul>
-    </section>#}
+
+    </section>
 </nav>
 
 {% block body %}{% endblock %}

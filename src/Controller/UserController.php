@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
@@ -17,6 +19,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class UserController extends AbstractController
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
@@ -32,36 +41,41 @@ class UserController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        // Gets all the values in the DIY form
+        $username = $request->get('userName');
+        $password = $request->get('pass');
+        $roleInput = $request->get('roleInput');
 
+        // valid if no value is empty
+        $isValid = !empty($username) && !empty($password) && !empty($roleInput);
 
+        // was form submitted with POST method?
+        $isSubmitted = $request->isMethod('POST');
 
-/*        print '<pre>';
-        if($form->isValid()){
-            print 'form is valid';
-        } else {
-            print 'form NOT valid';
-        }
+        // if SUBMITTED & VALID - go ahead and create new object
+        if ($isSubmitted && $isValid) {
 
-        print PHP_EOL;
+            $user = new User();
+            $user->setUsername($username);
 
-        var_dump($user);
-        die();*/
+            // password - and encoding
+            $encodedPassword = $this->passwordEncoder->encodePassword($user, $password);
+            $user->setPassword($encodedPassword);
+            $user->setRoles([$roleInput]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirectToRoute('user_index');
         }
+// if(username taken)
+        //{
+        //  $this->addFlash(
+//            'error', 'Username taken already'
+//        );
 
-        return $this->render('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+        return $this->render('user/new.html.twig');
     }
 
     /**
@@ -79,20 +93,32 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user): Response
     {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        // Gets all the values in the DIY form
+        $username = $request->get('userName');
+        $password = $request->get('pass');
+        $roleInput = $request->get('roleInput');
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        // valid if no value is empty
+        $isValid = !empty($username) && !empty($password) && !empty($roleInput);
+
+        // was form submitted with POST method?
+        $isSubmitted = $request->isMethod('POST');
+
+        // if SUBMITTED & VALID - go ahead and create new object
+        if ($isSubmitted && $isValid) {
+
+            $user->setUsername($username);
+            $encodedPassword = $this->passwordEncoder->encodePassword($user, $password);
+            $user->setPassword($encodedPassword);
+            $user->setRoles([$roleInput]);
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index', [
-                'id' => $user->getId(),
-            ]);
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
-            'form' => $form->createView(),
         ]);
     }
 

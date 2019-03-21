@@ -8,71 +8,36 @@
     <h1>Create a new Book</h1>
 
     {{ form_start(form) }}
+    <table class="table">
+        <tbody>
+        <tr>
+            <th><strong>{{ form_label(form.title) }}</strong></th>
+            <td>{{ form_widget(form.title) }}</td>
+        </tr>
+        <tr>
+            <th><strong>{{ form_label(form.author) }}</strong></th>
+            <td>{{ form_widget(form.author) }}</td>
+        </tr>
+        <tr>
+            <th><strong>{{ form_label(form.barcode) }}</strong></th>
+            <td>{{ form_widget(form.barcode) }}</td>
+        </tr>
+        <tr>
+            <th><strong>{{ form_label(form.genre) }}</strong></th>
+            <td>{{ form_widget(form.genre) }}</td>
+        </tr>
+        <tr>
+            <th><strong>{{ form_label(form.startingBid) }}</strong></th>
+            <td>{{ form_widget(form.startingBid) }}</td>
+        </tr>
+        <tr>
+            <th><strong>{{ form_label(form.user) }}</strong></th>
+            <td>{{ form_widget(form.user) }}</td>
+        </tr>
+        </tbody>
+    </table>
 
-    <div class="newForm">
-        <div class="error">
-            {{ form_errors(form.title) }}
-        </div>
-
-        <strong>{{ form_label(form.title) }} :</strong>
-
-        {{ form_widget(form.title) }}
-    </div>
-
-    <div class="newForm">
-        <div class="error">
-            {{ form_errors(form.author) }}
-        </div>
-
-        <strong>{{ form_label(form.author) }} :</strong>
-
-        {{ form_widget(form.author) }}
-    </div>
-
-    <div class="newForm">
-        <div class="error">
-            {{ form_errors(form.barcode) }}
-        </div>
-
-        <strong>{{ form_label(form.barcode) }} :</strong>
-
-        {{ form_widget(form.barcode) }}
-    </div>
-
-    <div class="newForm">
-        <div class="error">
-            {{ form_errors(form.genre) }}
-        </div>
-
-        <strong>{{ form_label(form.genre) }} :</strong>
-
-        {{ form_widget(form.genre) }}
-    </div>
-
-    <div class="newForm">
-        <div class="error">
-            {{ form_errors(form.startingBid) }}
-        </div>
-
-        <strong>{{ form_label(form.startingBid) }} :</strong>
-
-        {{ form_widget(form.startingBid) }}
-    </div>
-
-    <div class="newForm">
-        <div class="error">
-            {{ form_errors(form.user) }}
-        </div>
-
-        <strong>Owner :</strong>
-
-        {{ form_widget(form.user) }}
-    </div>
-
-    <div class="newForm">
-        {{ form_row(form.save) }}
-    </div>
-
+    {{ form_row(form.save) }}
 
     {{ form_end(form) }}
 

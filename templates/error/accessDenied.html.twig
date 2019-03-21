@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block accountPage %} current_page {% endblock %}
+
 {% block title %}Unauthorised{% endblock %}
 
 {% block body %}
@@ -7,7 +9,6 @@
 
     <p style="font-size: large">
         Sorry you don't have access to the requested page
-        {#you requested.#}
         <hr>
         <a href="{{ url('homepage') }}">Go to home page</a>
         <br>
