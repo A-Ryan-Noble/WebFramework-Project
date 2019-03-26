@@ -55,23 +55,40 @@
         {% endif %}
     </tr>
     <tr>
-        <th>Comments</th>
-        {% if book.comments == null %}
-            <td><strong>No Comments</strong></td>
+        <th>Questions</th>
+        {% if book.questions == null %}
+            <td><strong>No Questions</strong></td>
         {% else %}
             <ul>
-                <td>{{ book.comments ? book.comments|json_encode : '' }}</td>
-                {#<td>{{ book.comments ? book.comments}}</td>#}
+                <td>
+                    <ol>
+                        {% for question in book.questions %}
+                            <li> *question goes here*</li>
+                        {% endfor %}
+                    </ol>
+                </td>
+
+                {#<td>{{ question }}</td>#}
+                {#<td>{{ book.questions ? book.questions|json_encode : ''}}</td>#}
+                {#<td>{{ book.questions ? book.questions}}</td>#}
+
             </ul>
         {% endif %}
     </tr>
     <tr>
-        <th>Answers</th>
-        {% if book.answers == null %}
-            <td><strong>No Answers</strong></td>
+        <th>Replies</th>
+        {% if book.replies == null %}
+            <td><strong>No Replies to any Question</strong></td>
         {% else %}
             <ul>
-                <td>{{ book.answers ? book.answers}}</td>
+                <td>
+                    <ol>
+                        {% for reply in book.replies %}
+                            <li> *Reply goes here*</li>
+                        {% endfor %}
+                    </ol>
+                </td>
+
             </ul>
         {% endif %}
     </tr>
@@ -79,17 +96,22 @@
 
     {% if is_granted('ROLE_USER')%}
         <tr>
-            <th>Actions:</th>
+            <th style="vertical-align: middle; font-size: 20px">Actions:</th>
             <td>
-                <h4><a href="{{ url('book_edit', {'id': book.id}) }}">Edit</a></h4>
+                <h5><a href="{{ url('book_edit', {'id': book.id}) }}">Edit</a></h5>
+                <hr>
+                <h5><a href="{{ url('book_question', {'id': book.id}) }}">Ask Question</a></h5>
+                <hr>
+                {% if book.bidAccepted == false %}
+                    <h5><a href="{{ url('book_bid', {'id': book.id}) }}">Bid on Book</a></h5>
+                    <hr>
+                {% endif %}
                 {{ include('book/_delete_form.html.twig') }}
             </td>
         </tr>
 
         </tbody>
         </table>
-
-        <h5><a href="{{ url('book_comment', {'id': book.id}) }}">Comment on {{ book.title}}</a></h5>
 
         <hr>
 

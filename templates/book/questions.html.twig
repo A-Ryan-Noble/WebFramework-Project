@@ -3,10 +3,10 @@
 {% block booksPage %} current_page {% endblock %}
 
 
-{% block title %}Comments on Book{% endblock %}
+{% block title %}Questions on Book{% endblock %}
 
 {% block body %}
-    <h3>Do you have any comments about this book? </h3>
+    <h3>Do you have any questions about this book? </h3>
 
     <br>
 
@@ -40,10 +40,10 @@
 
     <br>
 
-    <h5> If you wish to post a comment on "{{ book.title }}", please fill in the form below:</h5>
+    <h5> If you wish to post a questions about "{{ book.title }}", please fill in the form below:</h5>
     <br>
     <form method="post" style="text-align: center">
-        <textarea rows="8" cols="80" name="commentIs" placeholder="Enter comment"></textarea><br>
+        <textarea rows="8" cols="80" name="question" placeholder="Enter Question"></textarea><br>
         <input type="submit">
     </form>
 

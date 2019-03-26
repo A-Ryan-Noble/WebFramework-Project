@@ -120,34 +120,35 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/book_comment", name="book_comment", methods={"GET","POST"})
+     * @Route("/{id}/book_question", name="book_question", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function comment(Request $request, Book $book): Response
+    public function question(Request $request, Book $book): Response
     {
-        // Gets the comment value
-        $comment = $request->get('commentIs');
+        // Gets the question value
+        $question = $request->get('question');
 
         // valid if no value is empty
-        $isValid = !empty($comment);
+        $isValid = !empty($question);
 
         // was form submitted with POST method?
         $isSubmitted = $request->isMethod('POST');
 
         if ($isValid && $isSubmitted)
         {
-            echo $comment;
+            echo $question;
 
 //            $comments = $book->getComments();
             // Set the comment of the book
-//            $book->Comments($comments [$comment]);
+            //$book->setComments([$comment]);
 
-//            $this->getDoctrine()->getManager()->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             // return back to the given book's view
-            return $this->render('book/show.html.twig',[
-                'book'=>$book,
-            ]);
+            return $this->redirect('book_show',$book);
+//            return $this->render('book/show.html.twig',[
+//                'book'=>$book,
+//            ]);
         }
 
 //        echo "test";
@@ -160,9 +161,24 @@ class BookController extends AbstractController
             return $this->redirectToRoute('all_books');
         }
 */
-        return $this->render('book/bookComment.html.twig', [
+        return $this->render('book/questions.html.twig', [
             'book' => $book,
             //'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/book_bid", name="book_bid", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function bid(Request $request, Book $book): Response
+    {
+        // Gets the Logged in user's bid
+        $bidByUser = $request->get('bidAmount');
+
+        echo '€'.$bidByUser.' by '.$this->getUser();
+        return $this->render('book/bidding.html.twig', [
+            'book' => $book,
         ]);
     }
 }

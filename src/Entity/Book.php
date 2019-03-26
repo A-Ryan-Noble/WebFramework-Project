@@ -68,12 +68,12 @@ class Book
     /**
      * @ORM\Column(type="array", nullable=true)
      */
-    private $comments = [];
+    private $questions = [];
 
     /**
      * @ORM\Column(type="array", nullable=true)
      */
-    private $answers = [];
+    private $replies = [];
 
     public function __construct()
     {
@@ -209,26 +209,25 @@ class Book
         return $this;
     }
 
-    public function getComments(): ?array
+    public function getQuestions(): ?array
     {
-        return $this->comments;
+        return $this->questions;
     }
 
-    public function setComments(?array $comments): self
+    public function setQuestions(?array $questions): self
     {
-        $this->comments = $comments;
-
+        $this->questions[] = $questions;
         return $this;
     }
 
-    public function getAnswers(): ?array
+    public function getReplies(): ?array
     {
-        return $this->answers;
+        return $this->replies;
     }
 
-    public function setAnswers(?array $answers): self
+    public function setReplies(?array $replies): self
     {
-        $this->answers = $answers;
+        $this->replies[] = $replies;
 
         return $this;
     }
