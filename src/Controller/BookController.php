@@ -125,7 +125,32 @@ class BookController extends AbstractController
      */
     public function comment(Request $request, Book $book): Response
     {
-        echo "test";
+        // Gets the comment value
+        $comment = $request->get('commentIs');
+
+        // valid if no value is empty
+        $isValid = !empty($comment);
+
+        // was form submitted with POST method?
+        $isSubmitted = $request->isMethod('POST');
+
+        if ($isValid && $isSubmitted)
+        {
+            echo $comment;
+
+//            $comments = $book->getComments();
+            // Set the comment of the book
+//            $book->Comments($comments [$comment]);
+
+//            $this->getDoctrine()->getManager()->flush();
+
+            // return back to the given book's view
+            return $this->render('book/show.html.twig',[
+                'book'=>$book,
+            ]);
+        }
+
+//        echo "test";
         /*$form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
@@ -134,10 +159,10 @@ class BookController extends AbstractController
 
             return $this->redirectToRoute('all_books');
         }
-
-        return $this->render('book/edit.html.twig', [
+*/
+        return $this->render('book/bookComment.html.twig', [
             'book' => $book,
-            'form' => $form->createView(),
-        ]);*/
+            //'form' => $form->createView(),
+        ]);
     }
 }

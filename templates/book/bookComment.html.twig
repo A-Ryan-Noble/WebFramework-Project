@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block booksPage %} current_page {% endblock %}
+
+
+{% block title %}Comments on Book{% endblock %}
+
+{% block body %}
+    <h3>Do you have any comments about this book? </h3>
+
+    <br>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Title of Book</th>
+            <th>Book Author</th>
+            <th>Genre</th>
+        </tr>
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.genre }}</td>
+        </tr>
+        <tr>
+            <th>Starting Bid</th>
+            <th>Current Bid</th>
+            <th>Bid Accepted</th>
+        </tr>
+            <td>€{{ book.startingBid }}</td>
+            <td>€{{ book.bid }}</td>
+            {% if book.bidAccepted == true %}
+                <td>The bid was accepted</td>
+            {% else %}
+                <td><strong>The bid was not accepted</strong></td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <h5> If you wish to post a comment on "{{ book.title }}", please fill in the form below:</h5>
+    <br>
+    <form method="post" style="text-align: center">
+        <textarea rows="8" cols="80" name="commentIs" placeholder="Enter comment"></textarea><br>
+        <input type="submit">
+    </form>
+
+    <br>
+    <br>
+
+    <hr>
+
+    <h4><a href="{{ url('book_index') }}">Back to Book catalog</a></h4>
+
+{% endblock %}

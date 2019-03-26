@@ -108,7 +108,7 @@ class UserFixtures extends Fixture
 
         $faker = Factory::create();
 
-        $book->setTitle($faker->sentence(rand(1, 4))); // sets the title to a random amount of wordds from 1-4
+        $book->setTitle($faker->sentence(rand(1, 4))); // sets the title to a random amount of words from 1-4
         $book->setAuthor($faker->firstName . " " . $faker->lastName);
         $book->setGenre($faker->randomElement(
             ['Self-help', 'Non-fiction', 'Educational', 'Biography', 'History', 'Fantasy', 'Science Fiction', 'Poetry', 'Thriller']

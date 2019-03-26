@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block booksPage %} current_page {% endblock %}
+{% block bookPage %} current_page {% endblock %}
 
 
 {% block title %}Showing Book{% endblock %}
@@ -11,11 +12,11 @@
     <br>
 
     <table class="table">
-    <tbody>
+    <tbody>{#
     <tr>
         <th>Id</th>
         <td>{{ book.id }}</td>
-    </tr>
+    </tr>#}
     <tr>
         <th>Title</th>
         <td>{{ book.title }}</td>
@@ -33,11 +34,15 @@
         <td>{{ book.genre }}</td>
     </tr>
     <tr>
-        <th>StartingBid</th>
+        <th>Owner</th>
+        <td>{{ book.user }}</td>
+    </tr>
+    <tr>
+        <th>Starting Bid</th>
         <td>€ {{ book.startingBid }}</td>
     </tr>
     <tr>
-        <th>Bid</th>
+        <th>Current Bid</th>
         <td>€ {{ book.bid }}</td>
     </tr>
     <tr>
@@ -55,7 +60,8 @@
             <td><strong>No Comments</strong></td>
         {% else %}
             <ul>
-                <td>{{ book.comments ? book.comments}}</td>
+                <td>{{ book.comments ? book.comments|json_encode : '' }}</td>
+                {#<td>{{ book.comments ? book.comments}}</td>#}
             </ul>
         {% endif %}
     </tr>
@@ -83,8 +89,7 @@
         </tbody>
         </table>
 
-       <br>
-        <h4><a href="{{ url('book_comment', {'id': book.id}) }}">Comment</a></h4>
+        <h5><a href="{{ url('book_comment', {'id': book.id}) }}">Comment on {{ book.title}}</a></h5>
 
         <hr>
 

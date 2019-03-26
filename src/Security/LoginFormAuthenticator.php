@@ -80,7 +80,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         elseif (!$password)
         {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException(' Incorrect.Password is wrong');
+            throw new CustomUserMessageAuthenticationException(' Incorrect Credentials');
         }
         return $user;
     }
