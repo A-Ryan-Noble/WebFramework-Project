@@ -34,39 +34,57 @@
     </tr>
     <tr>
         <th>StartingBid</th>
-        <td>{{ book.startingBid }}</td>
+        <td>€ {{ book.startingBid }}</td>
     </tr>
     <tr>
         <th>Bid</th>
-        <td>{{ book.bid }}</td>
+        <td>€ {{ book.bid }}</td>
     </tr>
     <tr>
         <th>Bid Accepted</th>
-        <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
+        {% if book.bidAccepted == true %}
+            <td>€{{ book.bid }} bid was accepted</td>
+        {% else %}
+            <td>€ {{ book.bid }} bid was not accepted</td>
+            {#<td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>#}
+        {% endif %}
     </tr>
     <tr>
         <th>Comments</th>
-        <td>{{ book.commentQuestion }}</td>
+        {% if book.comments == null %}
+            <td><strong>No Comments</strong></td>
+        {% else %}
+            <ul>
+                <td>{{ book.comments ? book.comments}}</td>
+            </ul>
+        {% endif %}
     </tr>
     <tr>
-        <th>Replies</th>
-        <td>{{ book.answerQs }}</td>
+        <th>Answers</th>
+        {% if book.answers == null %}
+            <td><strong>No Answers</strong></td>
+        {% else %}
+            <ul>
+                <td>{{ book.answers ? book.answers}}</td>
+            </ul>
+        {% endif %}
     </tr>
-    {#</tbody>
-</table>
-#}
+    </tbody>
+
     {% if is_granted('ROLE_USER')%}
         <tr>
             <th>Actions:</th>
             <td>
                 <h4><a href="{{ url('book_edit', {'id': book.id}) }}">Edit</a></h4>
-                {#<h4><a href="{{ url('book_delete', {'id': book.id}) }}">Delete</a></h4>#}
                 {{ include('book/_delete_form.html.twig') }}
             </td>
         </tr>
 
         </tbody>
         </table>
+
+       <br>
+        <h4><a href="{{ url('book_comment', {'id': book.id}) }}">Comment</a></h4>
 
         <hr>
 

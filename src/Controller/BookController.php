@@ -118,4 +118,26 @@ class BookController extends AbstractController
 
         return $this->redirectToRoute('all_books');
     }
+
+    /**
+     * @Route("/{id}/book_comment", name="book_comment", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function comment(Request $request, Book $book): Response
+    {
+        echo "test";
+        /*$form = $this->createForm(BookType::class, $book);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('all_books');
+        }
+
+        return $this->render('book/edit.html.twig', [
+            'book' => $book,
+            'form' => $form->createView(),
+        ]);*/
+    }
 }

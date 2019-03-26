@@ -40,9 +40,15 @@ class User implements UserInterface
      */
     private $books;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\book", inversedBy="bidders")
+     */
+    private $bids;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
+        $this->bids = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,5 +154,31 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->username.' ';
+    }
+
+    /**
+     * @return Collection|book[]
+     */
+    public function getBids(): Collection
+    {
+        return $this->bids;
+    }
+
+    public function addBid(book $bid): self
+    {
+        if (!$this->bids->contains($bid)) {
+            $this->bids[] = $bid;
+        }
+
+        return $this;
+    }
+
+    public function removeBid(book $bid): self
+    {
+        if ($this->bids->contains($bid)) {
+            $this->bids->removeElement($bid);
+        }
+
+        return $this;
     }
 }

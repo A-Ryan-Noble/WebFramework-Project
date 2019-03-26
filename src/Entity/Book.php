@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 //use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,20 +55,30 @@ class Book
     private $bidAccepted;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $commentQuestion;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $answerQs;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="user")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="bids")
+     */
+    private $bidders;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $comments = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $answers = [];
+
+    public function __construct()
+    {
+        $this->bidders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -157,30 +169,6 @@ class Book
         return $this;
     }
 
-    public function getCommentQuestion(): ?string
-    {
-        return $this->commentQuestion;
-    }
-
-    public function setCommentQuestion(string $commentQuestion): self
-    {
-        $this->commentQuestion = $commentQuestion;
-
-        return $this;
-    }
-
-    public function getAnswerQs(): ?string
-    {
-        return $this->answerQs;
-    }
-
-    public function setAnswerQs(?string $answerQs): self
-    {
-        $this->answerQs = $answerQs;
-
-        return $this;
-    }
-
     public function getUser(): ?user
     {
         return $this->user;
@@ -189,6 +177,58 @@ class Book
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getBidders(): Collection
+    {
+        return $this->bidders;
+    }
+
+    public function addBidder(User $bidder): self
+    {
+        if (!$this->bidders->contains($bidder)) {
+            $this->bidders[] = $bidder;
+            $bidder->addBid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBidder(User $bidder): self
+    {
+        if ($this->bidders->contains($bidder)) {
+            $this->bidders->removeElement($bidder);
+            $bidder->removeBid($this);
+        }
+
+        return $this;
+    }
+
+    public function getComments(): ?array
+    {
+        return $this->comments;
+    }
+
+    public function setComments(?array $comments): self
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    public function getAnswers(): ?array
+    {
+        return $this->answers;
+    }
+
+    public function setAnswers(?array $answers): self
+    {
+        $this->answers = $answers;
 
         return $this;
     }

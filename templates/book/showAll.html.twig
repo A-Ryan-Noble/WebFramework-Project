@@ -17,9 +17,9 @@
             <th>Genre</th>
             <th>StartingBid</th>
             <th>Bid</th>
-            <th>Accepted?</th>
-            <th>Comments</th>
-            <th>Replies</th>
+            <th>Accepted</th>
+           {# <th>Comments</th>
+            <th>Replies</th>#}
             <th>Owner</th>
             <th>Actions</th>
         </tr>
@@ -34,9 +34,21 @@
                 <td>{{ book.genre }}</td>
                 <td><strong>€</strong> {{ book.startingBid }}</td>
                 <td><strong>€</strong> {{ book.bid }}</td>
-                <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
-                <td>{{ book.commentQuestion }}</td>
-                <td>{{ book.answerQs }}</td>
+                <td>{{ book.bidAccepted ? 'Accepted' : 'Not Accepted' }}</td>
+      {#          <td>
+                    <ol>
+                        {% for comment in comments %}
+                            <li>{{ book.comment }}</li>
+                        {% endfor %}
+                    </ol>
+                </td>
+                <td>
+                    <ol>
+                        {% for answer in answers %}
+                            <li>{{ book.answer }}</li>
+                        {% endfor %}
+                    </ol>
+                </td>#}
                 <td>{{ book.user }}</td>
                 <td>
                     <a href="{{ url('book_show', {'id': book.id}) }}">View</a>
