@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block bookPage %} current_page {% endblock %}
+{% block booksPage %} current_page {% endblock %}
 
 {% block title %}Book Catalog{% endblock %}
 
@@ -48,4 +49,19 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <br>
+
+    {% if is_granted('ROLE_USER')%}
+
+    <table class="table">
+        <tbody>
+        <tr style="text-align: center">
+            <th>Wish to create a new Book? <a href="{{ url('book_new') }}" style="padding-left: 5rem"> Create</a></th>
+        </tr>
+        </tbody>
+    </table>
+
+    {% endif %}
+
 {% endblock %}

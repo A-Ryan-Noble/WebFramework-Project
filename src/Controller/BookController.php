@@ -10,11 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\FormTypeInterface;
-
-
-// Custom create and edit type
-use App\Form\BookType2;
 
 /**
  * @Route("/book")
@@ -30,17 +25,17 @@ class BookController extends AbstractController
             'books' => $bookRepository->findAll(),
         ]);
     }
-
-    /**
-     * @Route("/books", name="all_books", methods={"GET"})
-     * @IsGranted("ROLE_USER")
-     */
-    public function showAll(BookRepository $bookRepository): Response
-    {
-        return $this->render('book/showAll.html.twig', [
-            'books' => $bookRepository->findAll(),
-        ]);
-    }
+//
+//    /**
+//     * @Route("/books", name="all_books", methods={"GET"})
+//     * @IsGranted("ROLE_USER")
+//     */
+//    public function showAll(BookRepository $bookRepository): Response
+//    {
+//        return $this->render('book/showAll.html.twig', [
+//            'books' => $bookRepository->findAll(),
+//        ]);
+//    }
 
     /**
      * @Route("/new", name="book_new", methods={"POST", "GET"})
@@ -56,7 +51,7 @@ class BookController extends AbstractController
 
         $book->setBidAccepted(false); // set false here to avoid choose un the form
 
-        $form = $this->createForm(BookType2::class, $book);
+        $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
 
@@ -65,7 +60,7 @@ class BookController extends AbstractController
             $entityManager->persist($book);
             $entityManager->flush();
 
-            return $this->redirectToRoute('all_books');
+            return $this->redirectToRoute('book_index');
         }
 
         return $this->render('book/new.html.twig', [
@@ -95,7 +90,7 @@ class BookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('all_books');
+            return $this->redirectToRoute('book_index');
         }
 
         return $this->render('book/edit.html.twig', [
@@ -116,7 +111,7 @@ class BookController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('all_books');
+        return $this->redirectToRoute('book_index');
     }
 
     /**
@@ -158,7 +153,7 @@ class BookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('all_books');
+            return $this->redirectToRoute('book_index');
         }
 */
         return $this->render('book/questions.html.twig', [
