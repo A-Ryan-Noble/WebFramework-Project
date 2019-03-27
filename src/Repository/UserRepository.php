@@ -19,6 +19,26 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    // Queries the user table in the db
+    public function searchForUsername($name)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT username FROM user
+        WHERE username = :name
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['name' => $name]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetch();
+    }/*
+
+select username from webproject.user
+where username = "admin";
+*/
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

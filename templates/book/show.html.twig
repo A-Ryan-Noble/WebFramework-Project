@@ -96,7 +96,7 @@
 
     {% if is_granted('ROLE_USER')%}
         <tr>
-            <th style="vertical-align: middle; font-size: 20px">Actions:</th>
+            <th id="actions" style="font-size: 20px">Actions:</th>
             <td>
                 <h5><a href="{{ url('book_edit', {'id': book.id}) }}">Edit</a></h5>
                 <hr>

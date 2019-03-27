@@ -176,9 +176,23 @@ class BookController extends AbstractController
         // Gets the Logged in user's bid
         $bidByUser = $request->get('bidAmount');
 
-        echo '€'.$bidByUser.' by '.$this->getUser();
-        return $this->render('book/bidding.html.twig', [
-            'book' => $book,
+        // valid if no value is empty
+        $isValid = !empty($bidByUser);
+
+        // was form submitted with POST method?
+        $isSubmitted = $request->isMethod('POST');
+
+        if ($isValid && $isSubmitted)
+        {
+            // $book->setBid();
+
+            echo '€'.$bidByUser.' by '.$this->getUser();
+        }
+
+        $template = 'book/bidding.html.twig';
+
+        return $this->render($template,[
+            'book'=> $book,
         ]);
     }
 }

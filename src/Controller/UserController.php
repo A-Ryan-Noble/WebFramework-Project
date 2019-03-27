@@ -3,14 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -42,21 +40,37 @@ class UserController extends AbstractController
     public function new(Request $request): Response
     {
         // Gets all the values in the DIY form
-        $username = $request->get('userName');
+        $userName = $request->get('userName');
         $password = $request->get('pass');
         $roleInput = $request->get('roleInput');
 
         // valid if no value is empty
-        $isValid = !empty($username) && !empty($password) && !empty($roleInput);
+        $isValid = !empty($userName) && !empty($password) && !empty($roleInput);
 
         // was form submitted with POST method?
         $isSubmitted = $request->isMethod('POST');
 
+        /*
+         * Calls searchForUsername method in UserRepository passing userName from the form
+         */
+        $usernameTaken = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->searchForUsername($userName);
+
         // if SUBMITTED & VALID - go ahead and create new object
         if ($isSubmitted && $isValid) {
+            // If username isn't already in DB this null. I.e. username entered must be new otherwise re
+            if ($usernameTaken != null) {
+                $this->addFlash(
+                    'error',
+                    'Username is already taken'
+                );
+                return $this->render('user/new.html.twig');
+            }
 
             $user = new User();
-            $user->setUsername($username);
+
+            $user->setUsername($userName);
 
             // password - and encoding
             $encodedPassword = $this->passwordEncoder->encodePassword($user, $password);
@@ -69,14 +83,9 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('user_index');
         }
-// if(username taken)
-        //{
-        //  $this->addFlash(
-//            'error', 'Username taken already'
-//        );
-
         return $this->render('user/new.html.twig');
     }
+
 
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})

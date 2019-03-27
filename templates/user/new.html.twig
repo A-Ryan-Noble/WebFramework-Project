@@ -7,6 +7,12 @@
 {% block body %}
     <h2>Create a new User</h2>
 
+    {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="flash-error">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
     <h5> Fill out the form details below:</h5>
     <br>
 
@@ -17,7 +23,7 @@
         <tr>
             <th>Username:</th>
             <td>
-                <input type="text" name="userName" required>
+                <input type="text" name="userName" required autofocus>
             </td>
         </tr>
         <tr>
@@ -43,12 +49,6 @@
     </p>
 
 </form>
-
-    {#{% if error %}#}
-        {#<div class="flash-error">#}
-            {#{{ error}}#}
-        {#</div>#}
-    {#{% endif %}#}
 
     <hr>
     <h5><a href="{{ path('user_index') }}">Go back to the list</a></h5>

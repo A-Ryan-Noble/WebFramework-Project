@@ -39,9 +39,16 @@
 
     <h5> Please  enter your bid in the form below:</h5>
     <br>
-    <form method="post" style="text-align: center">
+
+    {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="flash-error">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
+    <form method="POST" style="text-align: center">
         User: <input type="text" value="{{ app.user }}" disabled>
-        Bid: €<input type="number" min="0.01" step="0.01" name="bidAmount">
+        Bid: €<input type="number" min={{ book.startingBid }} step="0.01" name="bidAmount" required autofocus>
         {#<textarea rows="8" cols="80" name="question" placeholder="Enter Question"></textarea><br>#}
         <input type="submit">
     </form>
