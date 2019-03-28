@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+//use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @Route("/book")
@@ -25,17 +26,6 @@ class BookController extends AbstractController
             'books' => $bookRepository->findAll(),
         ]);
     }
-//
-//    /**
-//     * @Route("/books", name="all_books", methods={"GET"})
-//     * @IsGranted("ROLE_USER")
-//     */
-//    public function showAll(BookRepository $bookRepository): Response
-//    {
-//        return $this->render('book/showAll.html.twig', [
-//            'books' => $bookRepository->findAll(),
-//        ]);
-//    }
 
     /**
      * @Route("/new", name="book_new", methods={"POST", "GET"})
@@ -68,6 +58,7 @@ class BookController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/{id}", name="book_show", methods={"GET"})
      */
@@ -131,36 +122,26 @@ class BookController extends AbstractController
 
         if ($isValid && $isSubmitted)
         {
-            echo $question;
+            // gets the username of the user logged in then adds it to the question
+            $loggedIn = $this->getUser();
+            $question = $question." - ".$loggedIn;
 
-//            $comments = $book->getComments();
-            // Set the comment of the book
-            //$book->setComments([$comment]);
+            $book->setQuestions([$question]);
 
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
 
             // return back to the given book's view
-            return $this->redirect('book_show',$book);
-//            return $this->render('book/show.html.twig',[
-//                'book'=>$book,
-//            ]);
+            $args = [
+                'id' => $book->getId()
+            ];
+            return $this->redirectToRoute('book_show',$args);
         }
 
-//        echo "test";
-        /*$form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('book_index');
-        }
-*/
-        return $this->render('book/questions.html.twig', [
-            'book' => $book,
-            //'form' => $form->createView(),
-        ]);
+        return $this->render('book/question.html.twig', ['book' => $book]);
     }
+
 
     /**
      * @Route("/{id}/book_bid", name="book_bid", methods={"GET","POST"})

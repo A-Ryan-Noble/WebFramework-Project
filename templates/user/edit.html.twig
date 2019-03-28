@@ -11,42 +11,42 @@
 
     <form method="POST">
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Username:</th>
-            <td>
-                <input type="text" name="userName" required value="{{ user.username }}">
-            </td>
-        </tr>
-        <tr>
-            <th>Password:</th>
-            <td>
-                <input type="password" name="pass" required value="{{ user.password }}">
-            </td>
-        </tr>
-        <tr>
-            <th>Their Role:</th>
-            <td>
-                <select name="roleInput" required>
-                    {% if user.roles[0] == "ROLE_ADMIN" %}
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Username:</th>
+                <td>
+                    <input type="text" name="userName" required value="{{ user.username }}">
+                </td>
+            </tr>
+            <tr>
+                <th>Password:</th>
+                <td>
+                    <input type="password" name="pass" required value="{{ user.password }}">
+                </td>
+            </tr>
+            <tr>
+                <th>Their Role:</th>
+                <td>
+                    <select name="roleInput" required>
+                        {% if user.roles[0] == "ROLE_ADMIN" %}
 
-                        <option value="{{ user.roles[0] }}">{{ user.roles[0]}}</option>
-                        <option value="ROLE_USER">ROLE_USER</option>
+                            <option value="{{ user.roles[0] }}">{{ user.roles[0]}}</option>
+                            <option value="ROLE_USER">ROLE_USER</option>
 
-                    {% else %}
-                        <option value="{{ user.roles[0] }}">{{ user.roles[0]}}</option>
-                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
-                    {% endif %}
-                </select>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                        {% else %}
+                            <option value="{{ user.roles[0] }}">{{ user.roles[0]}}</option>
+                            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        {% endif %}
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-    <p align="center">
-        <button class="btn">Update Details</button>
-    </p>
+        <p align="center">
+            <button class="btn">Update Details</button>
+        </p>
 
     </form>
 

@@ -62,15 +62,12 @@
                 <td>
                     <ol>
                         {% for question in book.questions %}
-                            <li> *question goes here*</li>
+                            {#index of question : question text (with [" ... "] removed ) #}
+                            <li style="list-style-position: inside;list-style-type: disc;text-align: left">{{ question|json_encode()|trim('["')|trim('"]')}} </li>
+                            {#<br>#}
                         {% endfor %}
                     </ol>
                 </td>
-
-                {#<td>{{ question }}</td>#}
-                {#<td>{{ book.questions ? book.questions|json_encode : ''}}</td>#}
-                {#<td>{{ book.questions ? book.questions}}</td>#}
-
             </ul>
         {% endif %}
     </tr>
@@ -114,7 +111,7 @@
 
         <hr>
 
-        <h4><a href="{{ url('all_books') }}">Back to Catalog page</a><br></h4>
+        <h4><a href="{{ url('book_index') }}">Back to Catalog page</a><br></h4>
     {% else %}
 
         </tbody>
