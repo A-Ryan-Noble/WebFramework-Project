@@ -12,10 +12,10 @@
 
     <table class="table">
     <tbody>
- {#   <tr>
-        <th>Id</th>
-        <td>{{ book.id }}</td>
-    </tr>#}
+    {#   <tr>
+           <th>Id</th>
+           <td>{{ book.id }}</td>
+       </tr>#}
     <tr>
         <th>Title</th>
         <td>{{ book.title }}</td>
@@ -62,7 +62,10 @@
                     <ol>
                         {% for question in book.questions %}
                             {#index of question : question text (with [" ... "] removed ) #}
-                            <li style="list-style-position: inside;list-style-type: disc;text-align: left">{{ question|json_encode()|trim('["')|trim('"]')}} </li>
+                            <li style="list-style-position: inside;text-align: left">
+                                {{ question|json_encode()|trim('["')|trim('"]')}}
+                                {#<span style="float: right"><a href="{{ url('book_answer', {'id': book.id ,'question': question|json_encode()|trim('["')|trim('"]')}) }}">Answer Question</a></span>#}
+                            </li>
                             {#<br>#}
                         {% endfor %}
                     </ol>
@@ -79,11 +82,12 @@
                 <td>
                     <ol>
                         {% for reply in book.replies %}
-                            <li> *Reply goes here*</li>
+                            <li style="list-style-position: inside;text-align: left">
+                                {{ reply|json_encode()|trim('["')|trim('"]')}}
+                            </li>
                         {% endfor %}
                     </ol>
                 </td>
-
             </ul>
         {% endif %}
     </tr>
@@ -97,6 +101,9 @@
                 <hr>
                 <h5><a href="{{ url('book_question', {'id': book.id}) }}">Ask Question</a></h5>
                 <hr>
+                <h5><a href="{{ url('book_answer', {'id': book.id}) }}">Answer Question</a></h5>
+                <hr>
+
                 {# if the given book is the logged in user AND it's bids havent been accepted #}
                 {% if (book.bidAccepted == false) and (book.getUser() != app.user ) %}
                     <h5><a href="{{ url('book_bid', {'id': book.id}) }}">Bid on Book</a></h5>

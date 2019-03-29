@@ -25,7 +25,7 @@ h1,h2, h3, h4
     border-top:black solid;
 }
 
-#tables, table input, table select
+#roleInput
 {
     width: 100%;
 }

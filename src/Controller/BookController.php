@@ -121,7 +121,7 @@ class BookController extends AbstractController
         if ($isValid && $isSubmitted) {
             // gets the username of the user logged in then adds it to the question
             $loggedIn = $this->getUser();
-            $question = $question . " - " . $loggedIn;
+            $question = $question . " - Asked by " . $loggedIn;
 
             $book->setQuestions([$question]);
 
@@ -139,6 +139,46 @@ class BookController extends AbstractController
         return $this->render('book/question.html.twig', ['book' => $book]);
     }
 
+    /**
+     * @Route("/{id}/question/answer", name="book_answer", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function answer(Request $request, Book $book): Response
+    {
+//        $thiqs = $request->
+
+        // Gets the reply value
+        $reply = $request->get('reply');
+
+        // valid if no value is empty
+        $isValid = !empty($reply);
+
+        // was form submitted with POST method?
+        $isSubmitted = $request->isMethod('POST');
+
+        if ($isValid && $isSubmitted) {
+            // gets the username of the user logged in then adds it to the question
+            $loggedIn = $this->getUser();
+            $reply = $reply . " - Answered by " . $loggedIn;
+
+//            echo $this->'question';
+            echo $reply;
+
+            $book->setReplies([$reply]);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+            // return back to the given book's view
+            $args = [
+                'id' => $book->getId()
+            ];
+            return $this->redirectToRoute('book_show', $args);
+        }
+
+        return $this->render('book/questionAnswer.html.twig', ['book' => $book]);
+    }
 
     /**
      * @Route("/{id}/bid", name="book_bid", methods={"GET","POST"})
