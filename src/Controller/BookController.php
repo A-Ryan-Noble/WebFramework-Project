@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-//use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @Route("/book")
@@ -43,7 +42,6 @@ class BookController extends AbstractController
 
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -96,7 +94,7 @@ class BookController extends AbstractController
      */
     public function delete(Request $request, Book $book): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($book);
             $entityManager->flush();
@@ -106,7 +104,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/book_question", name="book_question", methods={"GET","POST"})
+     * @Route("/{id}/question", name="book_question", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function question(Request $request, Book $book): Response
@@ -120,11 +118,10 @@ class BookController extends AbstractController
         // was form submitted with POST method?
         $isSubmitted = $request->isMethod('POST');
 
-        if ($isValid && $isSubmitted)
-        {
+        if ($isValid && $isSubmitted) {
             // gets the username of the user logged in then adds it to the question
             $loggedIn = $this->getUser();
-            $question = $question." - ".$loggedIn;
+            $question = $question . " - " . $loggedIn;
 
             $book->setQuestions([$question]);
 
@@ -136,7 +133,7 @@ class BookController extends AbstractController
             $args = [
                 'id' => $book->getId()
             ];
-            return $this->redirectToRoute('book_show',$args);
+            return $this->redirectToRoute('book_show', $args);
         }
 
         return $this->render('book/question.html.twig', ['book' => $book]);
@@ -144,11 +141,17 @@ class BookController extends AbstractController
 
 
     /**
-     * @Route("/{id}/book_bid", name="book_bid", methods={"GET","POST"})
+     * @Route("/{id}/bid", name="book_bid", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function bid(Request $request, Book $book): Response
     {
+        $template = 'book/bidding.html.twig';
+
+        $args = [
+            'book' => $book
+        ];
+
         // Gets the Logged in user's bid
         $bidByUser = $request->get('bidAmount');
 
@@ -158,17 +161,26 @@ class BookController extends AbstractController
         // was form submitted with POST method?
         $isSubmitted = $request->isMethod('POST');
 
-        if ($isValid && $isSubmitted)
-        {
-            // $book->setBid();
+        if ($isValid && $isSubmitted) {
+            $currentBid = $book->getBid();
 
-            echo '€'.$bidByUser.' by '.$this->getUser();
+            if ($bidByUser <= $currentBid) {
+                $this->addFlash(
+                    'error',
+                    'Your bid of € ' . $bidByUser . ' was too low, for it to be considered.'
+                );
+                return $this->render($template, $args);
+            }
+
+            $book->setBid($bidByUser);
+            $book->addBidder($this->getUser());
+            $book->setBidOnBy($this->getUser());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
         }
 
-        $template = 'book/bidding.html.twig';
-
-        return $this->render($template,[
-            'book'=> $book,
-        ]);
+        return $this->render($template, $args);
     }
 }

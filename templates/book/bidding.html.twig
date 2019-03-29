@@ -48,7 +48,11 @@
 
     <form method="POST" style="text-align: center">
         User: <input type="text" value="{{ app.user }}" disabled>
+        {% if book.bid >= book.startingBid %}
+        Bid: €<input type="number" min={{ book.bid }} step="0.01" name="bidAmount" required autofocus>
+            {% else %}
         Bid: €<input type="number" min={{ book.startingBid }} step="0.01" name="bidAmount" required autofocus>
+        {% endif %}
         {#<textarea rows="8" cols="80" name="question" placeholder="Enter Question"></textarea><br>#}
         <input type="submit">
     </form>

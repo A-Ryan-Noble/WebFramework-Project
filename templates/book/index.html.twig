@@ -32,8 +32,12 @@
                 <td>{{ book.author }}</td>
                 <td>{{ book.genre }}</td>
                 <td>€{{ book.startingBid }}</td>
-                <td>€{{ book.bid }}</td>
-                <td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
+                {% if book.bid == 0 %}
+                    <td id="info">No Bids </td>
+                {% else %}
+                    <td>€{{ book.bid }}</td>
+                {% endif %}
+                <td id="info">{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
                 <td>{{ book.user }}</td>
                 <td><a href="{{ url('book_show', {'id': book.id}) }}">More Details</a> </td>
             </tr>

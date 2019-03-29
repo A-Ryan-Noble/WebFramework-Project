@@ -75,6 +75,11 @@ class Book
      */
     private $replies = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bidOnBy;
+
     public function __construct()
     {
         $this->bidders = new ArrayCollection();
@@ -228,6 +233,18 @@ class Book
     public function setReplies(?array $replies): self
     {
         $this->replies[] = $replies;
+
+        return $this;
+    }
+
+    public function getBidOnBy(): ?string
+    {
+        return $this->bidOnBy;
+    }
+
+    public function setBidOnBy(?string $bidOnBy): self
+    {
+        $this->bidOnBy = $bidOnBy;
 
         return $this;
     }

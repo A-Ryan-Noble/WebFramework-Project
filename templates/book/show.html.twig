@@ -6,13 +6,13 @@
 {% block title %}Showing Book{% endblock %}
 
 {% block body %}
-    <h1>Details of the Book: </h1>
+    <h2>Details of the Book {{ book.id }}: </h2>
 
     <br>
 
     <table class="table">
-    <tbody>{#
-    <tr>
+    <tbody>
+ {#   <tr>
         <th>Id</th>
         <td>{{ book.id }}</td>
     </tr>#}
@@ -47,16 +47,15 @@
     <tr>
         <th>Bid Accepted</th>
         {% if book.bidAccepted == true %}
-            <td>€{{ book.bid }} bid was accepted</td>
+            <td>{{ book.user }} accepted the bid of<strong>: <br>€{{ book.bid }}</strong></td>
         {% else %}
-            <td>€ {{ book.bid }} bid was not accepted</td>
-            {#<td>{{ book.bidAccepted ? 'Yes' : 'No' }}</td>#}
+            <td><strong>Bid is yet to be accepted</strong></td>
         {% endif %}
     </tr>
     <tr>
-        <th>Questions</th>
+        <th id="tagCenterTH">Questions</th>
         {% if book.questions == null %}
-            <td><strong>No Questions</strong></td>
+            <td id="info">No Questions</td>
         {% else %}
             <ul>
                 <td>
@@ -72,9 +71,9 @@
         {% endif %}
     </tr>
     <tr>
-        <th>Replies</th>
+        <th id="tagCenterTH">Replies</th>
         {% if book.replies == null %}
-            <td><strong>No Replies to any Question</strong></td>
+            <td id="info">No Replies to any Question</td>
         {% else %}
             <ul>
                 <td>
@@ -92,14 +91,21 @@
 
     {% if is_granted('ROLE_USER')%}
         <tr>
-            <th id="actions" style="font-size: 20px">Actions:</th>
+            <th id="tagCenterTH" style="font-size: 20px">Actions:</th>
             <td>
                 <h5><a href="{{ url('book_edit', {'id': book.id}) }}">Edit</a></h5>
                 <hr>
                 <h5><a href="{{ url('book_question', {'id': book.id}) }}">Ask Question</a></h5>
                 <hr>
-                {% if book.bidAccepted == false %}
+                {# if the given book is the logged in user AND it's bids havent been accepted #}
+                {% if (book.bidAccepted == false) and (book.getUser() != app.user ) %}
                     <h5><a href="{{ url('book_bid', {'id': book.id}) }}">Bid on Book</a></h5>
+                    <hr>
+                {% endif %}
+
+                {# if the given book is the logged in user#}
+                {% if book.getUser() == app.user %}
+                    <h5><a href="{{ url('book_bidAccept', {'id': book.id}) }}">Accept Bid</a></h5>
                     <hr>
                 {% endif %}
                 {{ include('book/_delete_form.html.twig') }}
@@ -109,6 +115,7 @@
         </tbody>
         </table>
 
+        <br>
         <hr>
 
         <h4><a href="{{ url('book_index') }}">Back to Catalog page</a><br></h4>
@@ -116,6 +123,9 @@
 
         </tbody>
         </table>
+
+        <br>
+        <hr>
 
         <h4><a href="{{ url('book_index') }}">Back to Book catalog</a></h4>
     {% endif %}

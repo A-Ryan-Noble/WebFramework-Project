@@ -33,11 +33,7 @@ class UserRepository extends ServiceEntityRepository
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetch();
-    }/*
-
-select username from webproject.user
-where username = "admin";
-*/
+    }
 
     // /**
     //  * @return User[] Returns an array of User objects

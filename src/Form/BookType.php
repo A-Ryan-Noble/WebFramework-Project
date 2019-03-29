@@ -24,6 +24,7 @@ class BookType extends AbstractType
                 'scale' => 2,
                 'currency' => 'EUR',
                 'compound' => false,
+                'attr' => array('placeholder' => '0.00'),
             ])
             ->add('user',EntityType::class,[
                 'class'=>User::class,
