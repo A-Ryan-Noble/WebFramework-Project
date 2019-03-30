@@ -30,7 +30,7 @@ class BookType extends AbstractType
                 'class'=>User::class,
                 'choice_label'=>'username',
             ])
-            ->add('save', SubmitType::class, array('label' => 'Create Book'))
+//            ->add('save', SubmitType::class, array('label' => 'Save Book'))
 
         ;
 
