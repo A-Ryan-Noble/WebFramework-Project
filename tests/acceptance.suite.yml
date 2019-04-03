@@ -6,14 +6,14 @@
 
 actor: AcceptanceTester
 modules:
-    enabled:
+        enabled:
         - PhpBrowser:
-            url: http://localhost:8000
+                  url: http://localhost:8000
         - \App\Tests\Helper\Acceptance
         - Symfony:
-            app_path: 'src'
-            environment: 'test'
+                  app_path: 'src'
+                  environment: 'test'
         - Doctrine2:
-            depends: Symfony
-            cleanup: false
+                  depends: Symfony
+                  cleanup: false
         - Asserts
