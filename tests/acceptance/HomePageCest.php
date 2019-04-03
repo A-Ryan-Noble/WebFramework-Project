@@ -1,4 +1,6 @@
-<?php namespace App\Tests;
+<?php
+
+namespace App\Tests;
 use App\Tests\AcceptanceTester;
 
 class HomePageCest
@@ -22,17 +24,5 @@ class HomePageCest
         $I->amOnPage('/');
         $I->click('Login');
         $I->seeInCurrentUrl('/login');
-    }
-
-    public function LoginPageToAccountPage(AcceptanceTester $I)
-    {
-        $this->homePageToLoginPage($I);
-
-        $I->see('Username');
-        $I->fillField('#inputUsername', 'user');
-        $I->see('Password');
-        $I->fillField('#inputPassword', 'user');
-        $I->click('Login');
-        $I->amOnPage('/account');
     }
 }

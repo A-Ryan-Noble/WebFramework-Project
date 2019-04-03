@@ -1,8 +1,10 @@
-<?php namespace App\Tests;
+<?php
+
+namespace App\Tests;
 use App\Tests\AcceptanceTester;
 use Codeception\Example;
 
-class LoginCest
+class UserAdminLoginCest
 {
     /**
      * @example { "username": "user" ,"password":"user"}
