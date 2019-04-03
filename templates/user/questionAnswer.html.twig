@@ -7,7 +7,6 @@
 {% block body %}
     <h4>Do you have a response to any question on "{{ book.title }}" ? </h4>
 
-    {#<h5> Book Title: {{ book.title }}</h5>#}
     <br>
 
     <table class="table">
@@ -54,30 +53,30 @@
         </tr>
         <tr>
             {% if book.questions == null %}
-            <td id="info">No Questions</td>
+                <td id="info">No Questions</td>
             {% else %}
-            <ul>
-                <td>
-                    <ol>
-                        {% for question in book.questions %}
-                            <li style="list-style-position: inside;text-align: left">{{ question|json_encode()|trim('["')|trim('"]')}}</li>
-                        {% endfor %}
-                    </ol>
-                </td>
-            </ul>
+                <ul>
+                    <td>
+                        <ol>
+                            {% for question in book.questions %}
+                                <li style="list-style-position: inside;text-align: left">{{ question|json_encode()|trim('["')|trim('"]')}}</li>
+                            {% endfor %}
+                        </ol>
+                    </td>
+                </ul>
             {% endif %}
-        {#</tr>#}
-        {#<tr>#}
+            {#</tr>#}
+            {#<tr>#}
             {#<th>Reply</th>#}
-        {#</tr>#}
-        {#<tr>#}
+            {#</tr>#}
+            {#<tr>#}
             <td>
                 {# if there is no questions user is unable to reply #}
                 {% if book.questions == null %}
-                <form method="POST" style="text-align: center">
-                    <textarea rows="4" name="reply" id="roleInput" placeholder="Enter Reply" disabled></textarea><br>
-                    <input type="submit" value="Post Reply">
-                </form>
+                    <form method="POST" style="text-align: center">
+                        <textarea rows="4" name="reply" id="roleInput" placeholder="Enter Reply" disabled></textarea><br>
+                        <input type="submit" value="Post Reply">
+                    </form>
                 {% else %}
                     <form method="POST" style="text-align: center">
                         <textarea rows="4" name="reply" id="roleInput" placeholder="Enter Reply"></textarea><br>
@@ -91,7 +90,8 @@
 
     {#<h5> If you wish to post a question about "{{ book.title }}", please fill in the form below:</h5>#}
     <br>
-    <hr>
+
+    <hr id="pageHr">
 
     <h4><a href="{{ url('book_index') }}">Back to Book catalog</a></h4>
 

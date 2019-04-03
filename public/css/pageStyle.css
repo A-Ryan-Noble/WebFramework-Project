@@ -25,9 +25,10 @@ h1,h2, h3, h4
     border-top:black solid;
 }
 
-#roleInput
+#userInputs ,select
 {
     width: 100%;
+    text-align-last:center;
 }
 
 #tables ,th
@@ -44,4 +45,15 @@ h1,h2, h3, h4
 {
     font-weight:bold;
     color: #7DA0B1;
+}
+
+#item-id
+{
+    font-weight:bold;
+    color: lightcoral;
+}
+
+#pageHr
+{
+    border: black 1px solid;
 }

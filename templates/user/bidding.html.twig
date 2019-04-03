@@ -29,7 +29,7 @@
         </tr>
         <tr>
             <th>Current Bid</th>
-            <td>€{{ book.bid }}</td>
+            <td>€{{ book.bid }} - {{ book.bidOnBy }}</td>
         </tr>
 
         </tbody>
@@ -49,9 +49,9 @@
     <form method="POST" style="text-align: center">
         User: <input type="text" value="{{ app.user }}" disabled>
         {% if book.bid >= book.startingBid %}
-        Bid: €<input type="number" min={{ book.bid }} step="0.01" name="bidAmount" required autofocus>
-            {% else %}
-        Bid: €<input type="number" min={{ book.startingBid }} step="0.01" name="bidAmount" required autofocus>
+            Bid: €<input type="number" min={{ book.bid }} step="0.01" name="bidAmount" required autofocus>
+        {% else %}
+            Bid: €<input type="number" min={{ book.startingBid }} step="0.01" name="bidAmount" required autofocus>
         {% endif %}
         {#<textarea rows="8" cols="80" name="question" placeholder="Enter Question"></textarea><br>#}
         <input type="submit">
@@ -60,7 +60,7 @@
     <br>
     <br>
 
-    <hr>
+    <hr id="pageHr">
 
     <h4><a href="{{ url('book_index') }}">Back to Book catalog</a></h4>
 

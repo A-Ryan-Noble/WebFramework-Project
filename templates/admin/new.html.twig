@@ -23,19 +23,19 @@
         <tr>
             <th>Username:</th>
             <td>
-                <input type="text" name="userName" required autofocus>
+                <input type="text" id="userInputs" name="userName" required autofocus>
             </td>
         </tr>
         <tr>
             <th>Password:</th>
             <td>
-                <input type="password" name="pass" required>
+                <input type="password" id="userInputs" name="pass" required>
             </td>
         </tr>
         <tr>
             <th>Their Role:</th>
             <td>
-                <select id="roleInput" required>
+                <select name="roleInput" id="userInputs" required>
                     <option value="ROLE_USER">ROLE_USER</option>
                     <option value="ROLE_ADMIN">ROLE_ADMIN</option>
                 </select>
@@ -50,6 +50,8 @@
 
 </form>
 
-    <hr>
+    <br>
+
+    <hr id="pageHr">
     <h5><a href="{{ path('user_index') }}">Go back to the list</a></h5>
 {% endblock %}

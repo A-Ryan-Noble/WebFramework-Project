@@ -16,19 +16,19 @@
             <tr>
                 <th>Username:</th>
                 <td>
-                    <input type="text" name="userName" required value="{{ user.username }}">
+                    <input type="text" name="userName" id="userInputs" required value="{{ user.username }}">
                 </td>
             </tr>
             <tr>
                 <th>Password:</th>
                 <td>
-                    <input type="password" name="pass" required value="{{ user.password }}">
+                    <input type="password" name="pass" id="userInputs" required value="{{ user.password }}">
                 </td>
             </tr>
             <tr>
                 <th>Their Role:</th>
                 <td>
-                    <select name="roleInput" required>
+                    <select name="roleInput" id="userInputs" required>
                         {% if user.roles[0] == "ROLE_ADMIN" %}
 
                             <option value="{{ user.roles[0] }}">{{ user.roles[0]}}</option>
@@ -50,7 +50,7 @@
 
     </form>
 
-    <hr>
+    <hr id="pageHr">
     <h5><a href="{{ path('user_index') }}">Go back to the list</a></h5>
 
 {% endblock %}

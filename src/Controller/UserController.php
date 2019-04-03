@@ -2,15 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Book;
-use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/users")
@@ -18,139 +15,119 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
-    private $passwordEncoder;
-
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $this->passwordEncoder = $passwordEncoder;
-    }
-
     /**
-     * @Route("/", name="user_index", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/{id}/question", name="book_question", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
-    public function index(UserRepository $userRepository): Response
+    public function question(Request $request, Book $book): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function new(Request $request): Response
-    {
-        // Gets all the values in the DIY form
-        $userName = $request->get('userName');
-        $password = $request->get('pass');
-        $roleInput = $request->get('roleInput');
+        // Gets the question value
+        $question = $request->get('question');
 
         // valid if no value is empty
-        $isValid = !empty($userName) && !empty($password) && !empty($roleInput);
+        $isValid = !empty($question);
 
         // was form submitted with POST method?
         $isSubmitted = $request->isMethod('POST');
 
-        /*
-         * Calls searchForUsername method in UserRepository passing userName from the form
-         */
-        $usernameTaken = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->searchForUsername($userName);
+        if ($isValid && $isSubmitted) {
+            // gets the username of the user logged in then adds it to the question
+            $loggedIn = $this->getUser();
+            $question = $question . " - Asked by " . $loggedIn;
 
-        // if SUBMITTED & VALID - go ahead and create new object
-        if ($isSubmitted && $isValid) {
-            // If username isn't already in DB this null. I.e. username entered must be new otherwise re
-            if ($usernameTaken != null) {
+            $book->setQuestions([$question]);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+            // return back to the given book's view
+            $args = [
+                'id' => $book->getId()
+            ];
+            return $this->redirectToRoute('book_show', $args);
+        }
+
+        return $this->render('user/question.html.twig', ['book' => $book]);
+    }
+
+    /**
+     * @Route("/{id}/question/answer", name="book_answer", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function answer(Request $request, Book $book): Response
+    {
+        // Gets the reply value
+        $reply = $request->get('reply');
+
+        // valid if no value is empty
+        $isValid = !empty($reply);
+
+        // was form submitted with POST method?
+        $isSubmitted = $request->isMethod('POST');
+
+        if ($isValid && $isSubmitted) {
+            // gets the username of the user logged in then adds it to the question
+            $loggedIn = $this->getUser();
+            $reply = $reply . " - Answered by " . $loggedIn;
+
+            $book->setReplies([$reply]);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+            // return back to the given book's view
+            $args = [
+                'id' => $book->getId()
+            ];
+            return $this->redirectToRoute('book_show', $args);
+        }
+        return $this->render('user/questionAnswer.html.twig', ['book' => $book]);
+    }
+
+    /**
+     * @Route("/{id}/bid", name="book_bid", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function bid(Request $request, Book $book): Response
+    {
+        $template = 'user/bidding.html.twig';
+
+        $args = [
+            'book' => $book
+        ];
+
+        // Gets the Logged in user's bid
+        $bidByUser = $request->get('bidAmount');
+
+        // valid if no value is empty
+        $isValid = !empty($bidByUser);
+
+        // was form submitted with POST method?
+        $isSubmitted = $request->isMethod('POST');
+
+        if ($isValid && $isSubmitted) {
+            $currentBid = $book->getBid();
+
+            if ($bidByUser <= $currentBid) {
                 $this->addFlash(
                     'error',
-                    'Username is already taken'
+                    'Your bid of € ' . $bidByUser . ' was too low, for it to be considered.'
                 );
-                return $this->render('user/new.html.twig');
+                return $this->render($template, $args);
             }
 
-            $user = new User();
-
-            $user->setUsername($userName);
-
-            // password - and encoding
-            $encodedPassword = $this->passwordEncoder->encodePassword($user, $password);
-            $user->setPassword($encodedPassword);
-            $user->setRoles([$roleInput]);
+            $book->setBid($bidByUser);
+            $book->addBidder($this->getUser());
+            $book->setBidOnBy($this->getUser());
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('user_index');
-        }
-        return $this->render('user/new.html.twig');
-    }
-
-
-    /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function show(User $user): Response
-    {
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function edit(Request $request, User $user): Response
-    {
-        // Gets all the values in the DIY form
-        $username = $request->get('userName');
-        $password = $request->get('pass');
-        $roleInput = $request->get('roleInput');
-
-        // valid if no value is empty
-        $isValid = !empty($username) && !empty($password) && !empty($roleInput);
-
-        // was form submitted with POST method?
-        $isSubmitted = $request->isMethod('POST');
-
-        // if SUBMITTED & VALID - go ahead and create new object
-        if ($isSubmitted && $isValid) {
-
-            $user->setUsername($username);
-            $encodedPassword = $this->passwordEncoder->encodePassword($user, $password);
-            $user->setPassword($encodedPassword);
-            $user->setRoles([$roleInput]);
-
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('user_index');
-        }
-
-        return $this->render('user/edit.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function delete(Request $request, User $user): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
+            $entityManager->persist($book);
             $entityManager->flush();
         }
-
-        return $this->redirectToRoute('user_index');
+        return $this->render($template, $args);
     }
-
     /**
      * @Route("/bidding/book{id}/accept", name="book_bidAccept", methods={"GET","POST"})
      */
@@ -168,8 +145,6 @@ class UserController extends AbstractController
 
         if ($isSubmitted == true)
         {
-            echo 'accept';
-
             $book->setBidAccepted(true);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -178,7 +153,6 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('book_index');
         }
-
         return $this->render('user/acceptBid.html.twig',$args);
     }
 }

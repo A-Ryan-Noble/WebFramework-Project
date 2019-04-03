@@ -19,21 +19,21 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-//    // Queries the book table in the db
-//    public function searchForBooksOfUser($users_id)
-//    {
-//        $conn = $this->getEntityManager()->getConnection();
-//
-//        $sql = '
-//        SELECT * FROM book
-//        WHERE user_id = :id
-//        ';
-//        $stmt = $conn->prepare($sql);
-//        $stmt->execute(['id' => $users_id]);
-//
-//        // returns an array of arrays (i.e. a raw data set)
-//        return $stmt->fetch();
-//    }
+    // Queries the book table in the db
+    public function searchForUserBookTitle($users_id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT title FROM book b
+        WHERE b.user_id = :id
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $users_id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetch();
+    }
 
     // /**
     //  * @return Book[] Returns an array of Book objects
