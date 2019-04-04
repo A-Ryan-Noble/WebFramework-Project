@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\User;
+use App\Repository\BookRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -154,5 +156,20 @@ class UserController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
         return $this->render('user/acceptBid.html.twig',$args);
+    }
+
+    /**
+     * @Route("/ownedBooks", name="user_ownedBooks", methods={"GET"})
+     */
+    public function ownedBooks(User $user, BookRepository $bookRepository): Response
+    {
+        $template = 'book/booksOwned.html.twig';
+
+        $args = [
+            'users' => $user,
+            'books'=>$bookRepository->findAll(),
+        ];
+
+        return $this->render($template, $args);
     }
 }

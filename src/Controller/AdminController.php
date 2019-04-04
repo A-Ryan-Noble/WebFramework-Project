@@ -33,7 +33,6 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/index.html.twig', [
             'users' => $userRepository->findAll(),
-            'books'=> $bookRepository->searchForUserBookTitle('users'),
         ]);
     }
 
@@ -56,9 +55,7 @@ class AdminController extends AbstractController
         /*
          * Calls searchForUsername method in UserRepository passing userName from the form
          */
-        $usernameTaken = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->searchForUsername($userName);
+        $usernameTaken = $this->getDoctrine()->getRepository(User::class)->searchForUsername($userName);
 
         // if SUBMITTED & VALID - go ahead and create new object
         if ($isSubmitted && $isValid) {
@@ -74,7 +71,6 @@ class AdminController extends AbstractController
             $user = new User();
 
             $user->setUsername($userName);
-
             // password - and encoding
             $encodedPassword = $this->passwordEncoder->encodePassword($user, $password);
             $user->setPassword($encodedPassword);
@@ -92,11 +88,17 @@ class AdminController extends AbstractController
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
-    public function show(User $user): Response
+    public function show(User $user ,BookRepository $bookRepository): Response
     {
-        return $this->render('admin/show.html.twig', [
-            'user' => $user,
-        ]);
+        $template = 'admin/show.html.twig';
+
+        $args = [
+                'user' => $user,
+                // These two arrays will be looped through on the page to be displayed as one list item
+                'titleOfBooks'=>$bookRepository->searchForUserBookTitle($user->getId()),
+                'authorOfBooks'=>$bookRepository->searchForUserBookAuthor($user->getId()),
+            ];
+        return $this->render($template,$args);
     }
 
     /**

@@ -19,30 +19,20 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Loop Id</th>
                 <th>Id</th>
                 <th>Username</th>
                 <th>Roles</th>
                 <th>Password</th>
-                {#<th>Number of Books:</th>#}
                 <th id="tagCenterTH">Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for user in users %}
                 <tr>
-                    <td id ="item-id">{{ loop.index }}</td>
                     <td id ="item-id">{{ user.id }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                     <td>{{ user.password }}</td>
-                    {#<td>#}
-                        {#{%  for book in user.books %}#}
-                        {#{{ loop.index0 }}#}
-                            {#{{ book|json_encode()|trim('{')|trim('}')}}#}
-                        {#{% endfor %}#}
-                    {#</td>#}
-                    {#<td>{{ user.bids ? user.bids|json_encode : '' }}</td>#}
                     <td>
                         <a href="{{ path('user_show', {'id': user.id}) }}">More Details</a>
                     </td>
@@ -51,11 +41,10 @@
             </tbody>
         </table>
     {% endif %}
-
-    <br>
-
-    <hr id="pageHr">
+    <hr>
 
     <h4><a href="{{ path('user_new') }}">Create a User/Admin</a></h4>
+
+    <br>
 
 {% endblock %}

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block bookPage %} current_page {% endblock %}
-{% block booksPage %} current_page {% endblock %}
 
 {% block title %}Showing Book{% endblock %}
 
@@ -118,8 +117,6 @@
                 {{ include('book/_delete_form.html.twig') }}
             </td>
         </tr>
-
-        </tbody>
         </table>
 
         <br>

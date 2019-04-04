@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <th>Username</th>
-            <td>{{ user.username }}</td>
+            <td>{{ user }}</td>
         </tr>
         <tr>
             <th>Roles</th>
@@ -27,10 +27,25 @@
             <th>Password</th>
             <td>{{ user.password }}</td>
         </tr>
-        {#           <tr>
-                       <th>User's book(s);</th>
-                       <td>{{ user.booksOwned.title }}</td>
-                   </tr>#}
+        <tr>
+            <th>User's latest book;</th>
+
+            {% if (titleOfBooks and authorOfBooks) == null %}
+                <td>{{ user }} hasn't got any books</td>
+            {% else %}
+                <td>
+                    <ul>
+                        {% for titleOfBook in titleOfBooks %}
+                            <li style="list-style-position: inside;text-align: center">{{ titleOfBook ? titleOfBook|json_encode()}} written
+                                {% for authorOfBook in authorOfBooks %}
+                                    by {{ authorOfBook ? authorOfBook|json_encode()|trim('"')|trim('"')}}</li>
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            {% endif %}
+        </tr>
         <tr>
             <th id="tagCenterTH">Actions</th>
             <td>
