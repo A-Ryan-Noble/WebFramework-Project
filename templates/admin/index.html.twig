@@ -17,6 +17,7 @@
         <br>
 
         <table class="table">
+
             <thead>
             <tr>
                 <th>Id</th>
@@ -26,6 +27,7 @@
                 <th id="tagCenterTH">Actions</th>
             </tr>
             </thead>
+
             <tbody>
             {% for user in users %}
                 <tr>
@@ -39,8 +41,10 @@
                 </tr>
             {% endfor %}
             </tbody>
+
         </table>
     {% endif %}
+
     <hr>
 
     <h4><a href="{{ path('user_new') }}">Create a User/Admin</a></h4>

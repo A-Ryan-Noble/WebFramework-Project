@@ -6,28 +6,25 @@
 
 {% block body %}
 
-    <h2>Welcome to the Home page</h2>
+    <h3>Welcome to the Home page</h3>
 
     <br>
 
-    <p>
-        Welcome to the 7th iteration of the home page, this is the basic version
+    <li>
+        Welcome Guest to the site.
+    </li>
+
+    <p style="padding-left: 5%">
+        Feel welcomed to view our catalog of available books while your here.
     </p>
 
     <br>
 
-    <p>
-        Why don't you view a book while your here.
-    </p>
+    <li>
+        If you have an account:
+    </li>
 
-    {#user with user role is logged in #}
-    {% if is_granted('ROLE_USER')%}
-        <br>
-        <h5 style="color: #4fabc9"> <span style="color: red;font-style: italic">{{ app.user }}</span>, since you logged in. You can also CRUD books
-                {#user with admin role is logged in #}
-                {% if is_granted('ROLE_ADMIN')%}
-                    or Users, if you feel so inclined.
-                {% endif %}
-       </h5>
-    {% endif %}
+    <p style="padding-left: 5%">
+        You may also login to have access to more.
+    </p>
 {% endblock %}

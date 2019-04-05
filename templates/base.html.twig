@@ -22,12 +22,8 @@
             {# if person is logged in their nav is this#}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-                {#<li class="nav-item">#}
-                    {#<a class="nav-link {% block homePage2 %}{% endblock %}" href="{{ url('homepage') }}">Home</a>#}
-                {#</li>#}
-
                 <li class="nav-item">
-                    <a class="nav-link {% block accountPage %}{% endblock %}" href="{{ url('loggedIn')  }}">Account</a>
+                    <a class="nav-link {% block accountPage %}{% endblock %}" href="{{ url('loggedIn')  }}">Home</a>
                 </li>
 
                 {#user with admin role is logged in #}
