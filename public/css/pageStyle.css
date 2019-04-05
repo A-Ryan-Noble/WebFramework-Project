@@ -25,15 +25,15 @@ h1,h2, h3, h4
     border-top:black solid;
 }
 
+#tables ,th
+{
+    color: orangered
+}
+
 #userInputs ,select
 {
     width: 100%;
     text-align-last:center;
-}
-
-#tables ,th
-{
-    color: orangered
 }
 
 #tagCenterTH

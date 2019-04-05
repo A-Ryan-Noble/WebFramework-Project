@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block bookPage %} current_page {% endblock %}
+{% block booksPage %} current_page {% endblock %}
 
 {% block title %}Book Catalog{% endblock %}
 
@@ -15,6 +15,7 @@
         <h1>Available Books</h1>
 
         <table class="table">
+
             <thead>
             <tr>
                 <th>Id</th>
@@ -26,35 +27,38 @@
                 <th>Current Bid</th>
                 <th>Bid Accepted</th>
                 <th>Owner</th>
-                <th>View Product</th>
+                <th>More Details</th>
             </tr>
             </thead>
+
             <tbody>
             {% for book in books %}
+
                 <tr>
-                    <td id ="item-id">{{ book.id }}</td>
-                    <td>{{ book.title }}</td>
+                    <td id ="item-id" style="width: 5%">{{ book.id }}</td>
+                    <td style="width: 15%">{{ book.title }}</td>
                     <td>{{ book.barcode }}</td>
                     <td>{{ book.author }}</td>
                     <td>{{ book.genre }}</td>
                     <td>€{{ book.startingBid }}</td>
+
                     {% if book.bid == 0 %}
                         <td id="info">No Bids </td>
                     {% else %}
                         <td>€{{ book.bid }}</td>
                     {% endif %}
+
                     <td id="info">{{ book.bidAccepted ? 'Yes' : 'No' }}</td>
-                    <td>{{ book.user }}</td>
-                    <td><a href="{{ url('book_show', {'id': book.id}) }}">More Details</a> </td>
+                    <td style="width: 10%">{{ book.user }}</td>
+                    <td><a href="{{ url('book_show', {'id': book.id}) }}">View</a></td>
                 </tr>
-                {#{% else %}#}
-                {#<tr>#}
-                {#<td colspan="10">No books found</td>#}
-                {#</tr>#}
+
             {% endfor %}
             </tbody>
+
         </table>
     {% endif %}
+
     <br>
 
     {% if is_granted('ROLE_USER')%}

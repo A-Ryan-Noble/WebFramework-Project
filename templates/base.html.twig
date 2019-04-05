@@ -22,47 +22,48 @@
             {# if person is logged in their nav is this#}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-            <li class="nav-item">
-                <a class="nav-link {% block homePage2 %}{% endblock %}" href="{{ url('homepage') }}">Home</a>
-            </li>
+                {#<li class="nav-item">#}
+                    {#<a class="nav-link {% block homePage2 %}{% endblock %}" href="{{ url('homepage') }}">Home</a>#}
+                {#</li>#}
 
-            <li class="nav-item">
-                <a class="nav-link {% block accountPage %}{% endblock %}" href="{{ url('loggedIn')  }}">Account</a>
-            </li>
-
-            {#user with admin role is logged in #}
-            {% if is_granted('ROLE_ADMIN')%}
                 <li class="nav-item">
-                    <a class="nav-link {% block userPage %}{% endblock %}" href="{{ url('user_index') }}">Users</a>
+                    <a class="nav-link {% block accountPage %}{% endblock %}" href="{{ url('loggedIn')  }}">Account</a>
                 </li>
-            {% endif %}
 
-            {#user with user role is logged in#}
-            <li class="nav-item">
-                <a class="nav-link {% block booksPage %}{% endblock %}" href="{{ url('book_index') }}">Books</a>
-            </li>
+                {#user with admin role is logged in #}
+                {% if is_granted('ROLE_ADMIN')%}
+                    <li class="nav-item">
+                        <a class="nav-link {% block userPage %}{% endblock %}" href="{{ url('user_index') }}">Users</a>
+                    </li>
+                {% endif %}
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url('app_logout') }}">Logout</a>
-            </li>
+                {#user with user role is logged in#}
+                <li class="nav-item">
+                    <a class="nav-link {% block booksPage %}{% endblock %}" href="{{ url('book_index') }}">Books</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('app_logout') }}">Logout</a>
+                </li>
 
             {% else %}
-            {# non logged in person nav #}
-            <ul class="navbar-nav ml-auto">
+                {# non logged in person nav #}
+                <ul class="navbar-nav ml-auto">
 
-                <li class="nav-item">
-                    <a class="nav-link {% block homePage %}{% endblock %}" href="{{ url('homepage') }}">Home</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block homePage %}{% endblock %}" href="{{ url('homepage') }}">Home</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link {% block bookPage %}{% endblock %}" href="{{ url('book_index') }}">Books</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block bookPage %}{% endblock %}" href="{{ url('book_index') }}">Books</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link {% block loginPage %}{% endblock %}" href="{{ url('app_login') }}"> Login</a>
-                </li>
-                {% endif %}
-            </ul>
+                    <li class="nav-item">
+                        <a class="nav-link {% block loginPage %}{% endblock %}" href="{{ url('app_login') }}"> Login</a>
+                    </li>
+
+                </ul>
+            {% endif %}
         </ul>
 
     </section>

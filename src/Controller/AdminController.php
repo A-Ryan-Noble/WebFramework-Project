@@ -29,7 +29,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository, BookRepository $bookRepository): Response
+    public function index(UserRepository $userRepository): Response
     {
         return $this->render('admin/index.html.twig', [
             'users' => $userRepository->findAll(),
@@ -49,7 +49,7 @@ class AdminController extends AbstractController
         // valid if no value is empty
         $isValid = !empty($userName) && !empty($password) && !empty($roleInput);
 
-        // was form submitted with POST method?
+        // Check if form is submitted as a POST method
         $isSubmitted = $request->isMethod('POST');
 
         /*
@@ -93,11 +93,11 @@ class AdminController extends AbstractController
         $template = 'admin/show.html.twig';
 
         $args = [
-                'user' => $user,
-                // These two arrays will be looped through on the page to be displayed as one list item
-                'titleOfBooks'=>$bookRepository->searchForUserBookTitle($user->getId()),
-                'authorOfBooks'=>$bookRepository->searchForUserBookAuthor($user->getId()),
-            ];
+            'user' => $user,
+            // These two arrays will be looped through on the page to be displayed as one list item
+            'titleOfBooks'=>$bookRepository->searchForUsersLatestBookTitle($user->getId()),
+            'authorOfBooks'=>$bookRepository->searchForUsersLatestBookAuthor($user->getId()),
+        ];
         return $this->render($template,$args);
     }
 
@@ -114,7 +114,7 @@ class AdminController extends AbstractController
         // valid if no value is empty
         $isValid = !empty($username) && !empty($password) && !empty($roleInput);
 
-        // was form submitted with POST method?
+        // Check if form is submitted as a POST method
         $isSubmitted = $request->isMethod('POST');
 
         // if SUBMITTED & VALID - go ahead and create new object

@@ -37,10 +37,10 @@
                     <ul>
                         {% for titleOfBook in titleOfBooks %}
                             <li style="list-style-position: inside;text-align: center">{{ titleOfBook ? titleOfBook|json_encode()}} written
-                                {% for authorOfBook in authorOfBooks %}
-                                    by {{ authorOfBook ? authorOfBook|json_encode()|trim('"')|trim('"')}}</li>
-                                {% endfor %}
-                            </li>
+                            {% for authorOfBook in authorOfBooks %}
+                                by {{ authorOfBook ? authorOfBook|json_encode()|trim('"')|trim('"')}}
+                                </li>
+                            {% endfor %}
                         {% endfor %}
                     </ul>
                 </td>
@@ -51,6 +51,10 @@
             <td>
                 <ul>
                     <h5><a href="{{ path('user_edit', {'id': user.id}) }}">Edit details</a></h5>
+
+                    <hr>
+
+                    <h5><a href="{{ path('user_ownedBooks', {'id': user.id}) }}">View Books</a></h5>
 
                     <hr>
 

@@ -29,7 +29,7 @@ class UserController extends AbstractController
         // valid if no value is empty
         $isValid = !empty($question);
 
-        // was form submitted with POST method?
+        // Check if form is submitted as a POST method
         $isSubmitted = $request->isMethod('POST');
 
         if ($isValid && $isSubmitted) {
@@ -65,7 +65,7 @@ class UserController extends AbstractController
         // valid if no value is empty
         $isValid = !empty($reply);
 
-        // was form submitted with POST method?
+        // Check if form is submitted as a POST method
         $isSubmitted = $request->isMethod('POST');
 
         if ($isValid && $isSubmitted) {
@@ -106,7 +106,7 @@ class UserController extends AbstractController
         // valid if no value is empty
         $isValid = !empty($bidByUser);
 
-        // was form submitted with POST method?
+        // Check if form is submitted as a POST method
         $isSubmitted = $request->isMethod('POST');
 
         if ($isValid && $isSubmitted) {
@@ -131,7 +131,7 @@ class UserController extends AbstractController
         return $this->render($template, $args);
     }
     /**
-     * @Route("/bidding/book{id}/accept", name="book_bidAccept", methods={"GET","POST"})
+     * @Route("/bidding/book/{id}/accept", name="book_bidAccept", methods={"GET","POST"})
      */
     public function bidAcceptance(Request $request, Book $book): Response
     {
@@ -142,7 +142,7 @@ class UserController extends AbstractController
             'book' => $book
         ];
 
-        // was form submitted with POST method?
+        // Check if form is submitted as a POST method
         $isSubmitted = $request->isMethod('POST');
 
         if ($isSubmitted == true)
@@ -159,15 +159,26 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/ownedBooks", name="user_ownedBooks", methods={"GET"})
+     * @Route("/{id}/ownedBooks", name="user_ownedBooks", methods={"GET"})
      */
     public function ownedBooks(User $user, BookRepository $bookRepository): Response
     {
+        //Calls countBooksOfUser method in UserRepository passing user's Id from the form
+        $userGotBooks = $bookRepository->countBooksOfUser($user->getId());
+
+        $ownsAnBook = false; //
+
+        // If username has books in DB this is set as.
+        if ($userGotBooks >0) {
+            $ownsAnBook = true;
+        }
+
         $template = 'book/booksOwned.html.twig';
 
         $args = [
-            'users' => $user,
+            'user' => $user,
             'books'=>$bookRepository->findAll(),
+            'userhasBook' => $ownsAnBook,
         ];
 
         return $this->render($template, $args);

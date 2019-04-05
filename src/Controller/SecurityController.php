@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\BookRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,13 +35,22 @@ class SecurityController extends AbstractController
      * @Route("/account", name="loggedIn")
      * @IsGranted("ROLE_USER")
      */
-    public function loginSuccess()
+    public function loginSuccess(UserRepository $userRepository,BookRepository $bookRepository)
     {
-        $template = 'security/successfulLogin.html.twig';
-
-        $args = [
-        ];
-
-        return $this->render($template, $args);
+        return $this->redirectToRoute('homepage');
     }
+    /* $template = 'security/successfulLogin.html.twig';
+
+     $user = $userRepository->find($this->getUser());
+
+     $amountOwned = $bookRepository->countBooksOfUser($user);
+
+     $args = [
+         'userRoles' => $user->getRoles(),
+         'bookAmount' => $amountOwned,
+         'title' => 'Account',
+     ];
+
+     return $this->render($template, $args);
+ }*/
 }

@@ -20,7 +20,7 @@ class BookRepository extends ServiceEntityRepository
     }
 
     // Queries for the book title of a user's  book
-    public function searchForUserBookTitle($users_id)
+    public function searchForUsersLatestBookTitle($users_id)
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -36,7 +36,7 @@ class BookRepository extends ServiceEntityRepository
     }
 
     // Queries for the book author of a user's  book
-    public function searchForUserBookAuthor($users_id)
+    public function searchForUsersLatestBookAuthor($users_id)
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -49,6 +49,18 @@ class BookRepository extends ServiceEntityRepository
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetch();
+    }
+
+    // Queries to count amount of books owned by user
+    public function countBooksOfUser($users_id)
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.user = :id')
+            ->setParameter('id', $users_id)
+            ->select('SUM(b.user)')
+            ->getQuery()
+            ->getSingleScalarResult();
+        ;
     }
 
     // /**

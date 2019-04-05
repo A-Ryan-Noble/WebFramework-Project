@@ -2,12 +2,15 @@
 
 {% block accountPage %} current_page {% endblock %}
 
-{% block title %}Logged in{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-    <h5>
-        {{ app.user.username }}, your account details are as follows:
-    </h5>
+
+    <h2 style="color: #ff4d4d; text-decoration: underline">Welcome to the site home</h2>
+
+    <br>
+
+    <h4>{{ app.user.username }}, your account details are as follows:</h4>
 
     <br>
 
@@ -16,17 +19,34 @@
         <tr>
             <th>Username:</th>
             <th>Role(s):</th>
+            <th>Amount of books</th>
         </tr>
         <tr>
             <td>{{ app.user }}</td>
-            <td>
-                <ol>
-                    {% for role in  app.user.roles %}
-                        <li>{{ role }}</li>
-                    {% endfor %}
-                </ol>
-            </td>
+            <td>{{ userRoles[0] }}</td>
+            <td>{{ bookAmount }}</td>
         </tr>
         </tbody>
     </table>
+
+    <br>
+
+    <h5> Some things you can do: </h5>
+
+    <h6>
+        <ul>
+            <li><a href="{{ path('book_index') }}">View Books</a></li>
+
+            {% if is_granted('ROLE_ADMIN')%}
+                <li><a href="{{ path('book_index') }}">View Users page</a></li>
+
+                <li><a href="{{ url('user_new') }}"> Add a new User</a></li>
+            {% endif %}
+
+            <li><a href="{{ url('book_new') }}"> Create a new Book</a></li>
+
+            <li><a href="{{ url('user_ownedBooks',{'id': app.user.id}) }}"> See your own Books</a></li>
+        </ul>
+    </h6>
+
 {% endblock %}
