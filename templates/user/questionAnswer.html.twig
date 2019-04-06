@@ -48,38 +48,21 @@
     <table class="table">
         <tbody>
         <tr>
-            <th>Questions</th>
+            <th>Question Asked</th>
             <th>Reply</th>
         </tr>
         <tr>
-            {% if book.questions == null %}
-                <td id="info">No Questions</td>
-            {% else %}
-                <ul>
-                    <td>
-                        <ol>
-                            {% for question in book.questions %}
-                                <li style="list-style-position: inside;text-align: left">{{ question|json_encode()|trim('["')|trim('"]')}}</li>
-                            {% endfor %}
-                        </ol>
-                    </td>
-                </ul>
-            {% endif %}
-            {#</tr>#}
-            {#<tr>#}
-            {#<th>Reply</th>#}
-            {#</tr>#}
-            {#<tr>#}
+            <td>{{ question }}</td>
             <td>
                 {# if there is no questions user is unable to reply #}
                 {% if book.questions == null %}
                     <form method="POST" style="text-align: center">
-                        <textarea rows="4" name="reply" id="roleInput" placeholder="Enter Reply" disabled></textarea><br>
+                        <textarea rows="4" name="reply" id="userInputs" placeholder="Enter Reply" disabled></textarea><br>
                         <input type="submit" value="Post Reply">
                     </form>
                 {% else %}
                     <form method="POST" style="text-align: center">
-                        <textarea rows="4" name="reply" id="roleInput" placeholder="Enter Reply"></textarea><br>
+                        <textarea name="reply" id="userInputs" placeholder="Enter Reply"></textarea><br>
                         <input type="submit" value="Post Reply">
                     </form>
                 {% endif %}

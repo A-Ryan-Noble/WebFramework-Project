@@ -1,48 +1,54 @@
 {% extends 'base.html.twig' %}
 
+{% block bookPage %} current_page {% endblock %}
 {% block booksPage %} current_page {% endblock %}
 
 {% block title %}Showing Book{% endblock %}
 
 {% block body %}
+
     <h2>Details of the Book {{ book.id }}: </h2>
 
     <br>
 
     <table class="table">
     <tbody>
-    {#   <tr>
-           <th>Id</th>
-           <td>{{ book.id }}</td>
-       </tr>#}
+
     <tr>
         <th>Title</th>
         <td>{{ book.title }}</td>
     </tr>
+
     <tr>
         <th>Author</th>
         <td>{{ book.author }}</td>
     </tr>
+
     <tr>
         <th>Barcode</th>
         <td>{{ book.barcode }}</td>
     </tr>
+
     <tr>
         <th>Genre</th>
         <td>{{ book.genre }}</td>
     </tr>
+
     <tr>
         <th>Owner</th>
         <td>{{ book.user }}</td>
     </tr>
+
     <tr>
         <th>Starting Bid</th>
         <td>€ {{ book.startingBid }}</td>
     </tr>
+
     <tr>
         <th>Current Bid</th>
         <td>€ {{ book.bid }}</td>
     </tr>
+
     <tr>
         <th>Bid Accepted</th>
         {% if book.bidAccepted == true %}
@@ -51,43 +57,48 @@
             <td><strong>Bid is yet to be accepted</strong></td>
         {% endif %}
     </tr>
+
     <tr>
         <th id="tagCenterTH">Questions</th>
+
         {% if book.questions == null %}
             <td id="info">No Questions</td>
+
         {% else %}
-            <ul>
-                <td>
-                    <ol>
-                        {% for question in book.questions %}
-                            {#index of question : question text (with [" ... "] removed ) #}
+            <td>
+                <ul>
+                    {% for question in book.questions %}
+                        {% if question != null %}
+                            {#index of question : question text (with [" ... "] pat to beremoved ) #}
                             <li style="list-style-position: inside;text-align: left">
                                 {{ question|json_encode()|trim('["')|trim('"]')}}
-                                {#<span style="float: right"><a href="{{ url('book_answer', {'id': book.id ,'question': question|json_encode()|trim('["')|trim('"]')}) }}">Answer Question</a></span>#}
+                                <span style="float: right; padding-right: 5%;"><a href="{{ url('book_answer', {'id': book.id ,'questionId': question|json_encode()|trim('["')|trim('"]')}) }}">Answer Question</a></span>
                             </li>
-                            {#<br>#}
-                        {% endfor %}
-                    </ol>
-                </td>
-            </ul>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </td>
+
         {% endif %}
     </tr>
+
     <tr>
         <th id="tagCenterTH">Replies</th>
+
         {% if book.replies == null %}
             <td id="info">No Replies to any Question</td>
+
         {% else %}
-            <ul>
-                <td>
-                    <ol>
-                        {% for reply in book.replies %}
-                            <li style="list-style-position: inside;text-align: left">
-                                {{ reply|json_encode()|trim('["')|trim('"]')}}
-                            </li>
-                        {% endfor %}
-                    </ol>
-                </td>
-            </ul>
+            <td>
+                <ul>
+                    {% for reply in book.replies %}
+                        <li style="list-style-position: inside;text-align: left">
+                            {{ reply|json_encode()|trim('["')|trim('"]')}}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </td>
+
         {% endif %}
     </tr>
     </tbody>
@@ -99,8 +110,6 @@
                 <h5><a href="{{ url('book_edit', {'id': book.id}) }}">Edit</a></h5>
                 <hr id="tablesHr">
                 <h5><a href="{{ url('book_question', {'id': book.id}) }}">Ask Question</a></h5>
-                <hr id="tablesHr">
-                <h5><a href="{{ url('book_answer', {'id': book.id}) }}">Answer Question</a></h5>
                 <hr id="tablesHr">
 
                 {# if the given book is the logged in user AND it's bids havent been accepted #}
@@ -123,7 +132,11 @@
 
         <hr id="pageHr">
 
-        <h4><a href="{{ url('book_index') }}">Back to Catalog page</a><br></h4>
+        <h4><a href="{{ url('book_index') }}">Back to Book Catalog </a><br></h4>
+        <hr>
+        <h4><a href="{{ url('user_ownedBooks',{'id': app.user.id}) }}"> See your Books</a></h4>
+
+
     {% else %}
 
         </tbody>
@@ -136,4 +149,5 @@
         <h4><a href="{{ url('book_index') }}">Back to Book catalog</a></h4>
     {% endif %}
 
+    <br>
 {% endblock %}

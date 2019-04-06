@@ -54,11 +54,27 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/question/answer", name="book_answer", methods={"GET","POST"})
+     * @Route("/{id}/answer", name="book_answer", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function answer(Request $request, Book $book): Response
     {
+        $question = $request->get(('questionId'));
+
+        /*
+         * Returns an array of the message that the user entered at 1 index.
+         * With " - by (username)" in another
+         */
+        $q =explode( ' - ', $question);
+
+        /*
+         * Returns the user that entered said array. ie. returns what is after who it was asked by
+         */
+        $q2 = explode('Asked by',$q[1]);
+
+        $questionPart = $q[0];
+        $userPart = $q2[1];
+
         // Gets the reply value
         $reply = $request->get('reply');
 
@@ -71,21 +87,46 @@ class UserController extends AbstractController
         if ($isValid && $isSubmitted) {
             // gets the username of the user logged in then adds it to the question
             $loggedIn = $this->getUser();
-            $reply = $reply . " - Answered by " . $loggedIn;
 
-            $book->setReplies([$reply]);
+            $result = $userPart." asked: ''".$questionPart."''. ".$loggedIn." response".": ''".$reply."''";
+
+            $book->setReplies([$result]);
+
+//            $questionRem = $this->getDoctrine()->getRepository(Book::class)->findQuestion;
+
+//            $book->removeQuestion($question);
+
+//          $questions = $book->getQuestions();
+//
+//            foreach($questions as $element) {
+//                foreach($element as $valueKey ) {
+//                    if($valueKey = $question){
+//                        //delete this particular object from the $array
+////                        unset($questions[$elementKey]);
+//                        echo  "unset jere. ";
+//                    }
+//                }
+//
+//            // loop throough the questions from db and remove
+//            for ($i = 0; $i<count($questions); $i++) {
+//                print_r($questions[$i]);
+//            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($book);
             $entityManager->flush();
 
-            // return back to the given book's view
+//             return back to the given book's view
             $args = [
-                'id' => $book->getId()
+                'id' => $book->getId(),
+                'replies' => $result,
             ];
             return $this->redirectToRoute('book_show', $args);
         }
-        return $this->render('user/questionAnswer.html.twig', ['book' => $book]);
+        return $this->render('user/questionAnswer.html.twig', [
+            'book' => $book,
+            'question' => $question,
+        ]);
     }
 
     /**

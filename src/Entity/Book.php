@@ -225,6 +225,11 @@ class Book
         return $this;
     }
 
+    public function removeQuestion($question)
+    {
+        $this->questions[$question] = null;
+    }
+
     public function getReplies(): ?array
     {
         return $this->replies;
