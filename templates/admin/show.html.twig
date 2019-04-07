@@ -5,27 +5,33 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User Details</h1>
+    <h1>User's Details</h1>
 
     <br>
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ user.id }}</td>
-        </tr>
+        {#
+                <tr>
+                    <th>Id</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+        #}
         <tr>
             <th>Username</th>
             <td>{{ user }}</td>
         </tr>
         <tr>
             <th>Roles</th>
-            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            <td>{{ user.roles ? user.roles|json_encode()|trim('["')|trim('"]') }}</td>
         </tr>
         <tr>
             <th>Password</th>
             <td>{{ user.password }}</td>
+        </tr>
+        <tr>
+            <th> Amount of books owned</th>
+            <td>{{ bookAmount }}</td>
         </tr>
         <tr>
             <th>User's latest book;</th>
@@ -36,25 +42,26 @@
                 <td>
                     <ul>
                         {% for titleOfBook in titleOfBooks %}
-                            <li style="list-style-position: inside;text-align: center">{{ titleOfBook ? titleOfBook|json_encode()}} written
-                            {% for authorOfBook in authorOfBooks %}
-                                by {{ authorOfBook ? authorOfBook|json_encode()|trim('"')|trim('"')}}
-                                </li>
-                            {% endfor %}
+                            <li style="list-style-position: inside;text-align: left">"{{ titleOfBook ? titleOfBook|json_encode()|trim('{"title":')|trim('"}')}}" written
+                                by {{ authorOfBooks[loop.index0]|json_encode()|trim('{"author":"')|trim('"}')}}.
+                            </li>
                         {% endfor %}
+                        <p>
+                            {#<a href="{{ path('user_ownedBooks', {'id': userId}) }}">View Books in more detail</a>#}
+                        </p>
                     </ul>
                 </td>
             {% endif %}
         </tr>
         <tr>
-            <th id="tagCenterTH">Actions</th>
+            <th id="tagCenter">Actions</th>
             <td>
                 <ul>
-                    <h5><a href="{{ path('user_edit', {'id': user.id}) }}">Edit details</a></h5>
+                    <h5><a href="{{ path('user_ownedBooks', {'id': userId}) }}">View Books in more detail</a></h5>
 
                     <hr>
 
-                    <h5><a href="{{ path('user_ownedBooks', {'id': user.id}) }}">View Books</a></h5>
+                    <h5><a href="{{ path('user_edit', {'id': user.id}) }}">Edit details</a></h5>
 
                     <hr>
 

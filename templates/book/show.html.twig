@@ -59,7 +59,7 @@
     </tr>
 
     <tr>
-        <th id="tagCenterTH">Questions</th>
+        <th id="tagCenter">Questions</th>
 
         {% if book.questions == null %}
             <td id="info">No Questions</td>
@@ -78,12 +78,11 @@
                     {% endfor %}
                 </ul>
             </td>
-
         {% endif %}
     </tr>
 
     <tr>
-        <th id="tagCenterTH">Replies</th>
+        <th id="tagCenter">Replies</th>
 
         {% if book.replies == null %}
             <td id="info">No Replies to any Question</td>
@@ -105,25 +104,40 @@
 
     {% if is_granted('ROLE_USER')%}
         <tr>
-            <th id="tagCenterTH" style="font-size: 20px">Actions:</th>
-            <td>
-                <h5><a href="{{ url('book_edit', {'id': book.id}) }}">Edit</a></h5>
-                <hr id="tablesHr">
-                <h5><a href="{{ url('book_question', {'id': book.id}) }}">Ask Question</a></h5>
-                <hr id="tablesHr">
+            <th id="tagCenter" style="font-size: 20px">Actions:<br>
+                <br>
+                {{ include('book/_delete_form.html.twig') }}
+            </th>
+
+            <td style="width: 60%;" align="left">
+
+                <span style="padding-left: 30%"></span>
+                <a href="{{ url('book_edit', {'id': book.id}) }}">Edit</a>
+                <span style="padding-left: 20%"></span>
+                <a href="{{ url('book_question', {'id': book.id}) }}">Ask Question</a>
+
+                <hr>
+
+                <span style="padding-left: 30%"></span>
+
+                <a href="{{ path('user_ownedBooks', {'id': bookOwnerId}) }}">More of {{ book.user }}'s books</a>
+                <span style="padding-left: 5%"></span>
+
+                {# if the given book is the logged in user#}
+                {% if (book.bidAccepted == false) and (book.getUser() == app.user) %}
+                    {#{% if book.bid >0 %}#}
+                    <span style="display: inline-block;">
+                        {{ include('book/_acceptBid_alert_message.html.twig') }}
+                    </span>
+                        {#{% endif %}#}
+                {% endif %}
 
                 {# if the given book is the logged in user AND it's bids havent been accepted #}
                 {% if (book.bidAccepted == false) and (book.getUser() != app.user ) %}
-                    <h5><a href="{{ url('book_bid', {'id': book.id}) }}">Bid on Book</a></h5>
-                    <hr id="tablesHr">
+                    <span style="padding-left: 30%"></span>
+                    <a href="{{ url('book_bid', {'id': book.id}) }}">Bid on Book</a>
+                    <span style="padding-left: 13%"></span>
                 {% endif %}
-
-                {# if the given book is the logged in user#}
-                {% if book.getUser() == app.user %}
-                    <h5><a href="{{ url('book_bidAccept', {'id': book.id}) }}">Accept Bid</a></h5>
-                    <hr id="tablesHr">
-                {% endif %}
-                {{ include('book/_delete_form.html.twig') }}
             </td>
         </tr>
         </table>
@@ -135,7 +149,6 @@
         <h4><a href="{{ url('book_index') }}">Back to Book Catalog </a><br></h4>
         <hr>
         <h4><a href="{{ url('user_ownedBooks',{'id': app.user.id}) }}"> See your Books</a></h4>
-
 
     {% else %}
 
@@ -150,4 +163,5 @@
     {% endif %}
 
     <br>
+
 {% endblock %}

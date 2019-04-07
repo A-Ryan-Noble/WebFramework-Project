@@ -14,36 +14,30 @@ class DefaultController extends AbstractController
      */
     public function indexAction()
     {
-
-        // if user is logged in and they type the route this page, their page will look like theit account page
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY'))
-        {
+        // if user is logged in and they type the route of this page, their page will look like theit account page
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             $template = 'security/successfulLogin.html.twig';
 
-        $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
+            $user = $this->getDoctrine()->getRepository(User::class)->find($this->getUser());
 
-        $amountOwned = $this->getDoctrine()->getRepository(Book::class)->countBooksOfUser($user);
+            $amountOwned = $this->getDoctrine()->getRepository(Book::class)->countBooksOfUser($user);
 
-        $args = [
-            'userRoles' => $user->getRoles(),
-            'bookAmount' => $amountOwned,
-            'title'=>'Account'
-        ];
-
+            $args = [
+                'userRoles' => $user->getRoles(),
+                'bookAmount' => $amountOwned,
+                'title' => 'Account'
+            ];
             return $this->render($template, $args);
         }
 
-        else
-        {
+        else {
             $template = 'default/homepage.html.twig';
 
-            $args=[
+            $args = [
                 'title' => "Home"
             ];
 
             return $this->render($template, $args);
         }
-
-
     }
 }

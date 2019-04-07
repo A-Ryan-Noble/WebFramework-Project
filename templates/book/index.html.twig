@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% block bookPage %} current_page {% endblock %}
 {% block booksPage %} current_page {% endblock %}
 
 {% block title %}Book Catalog{% endblock %}
@@ -74,5 +75,7 @@
         </table>
 
     {% endif %}
+
+    <br>
 
 {% endblock %}

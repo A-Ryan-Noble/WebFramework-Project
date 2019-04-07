@@ -35,22 +35,8 @@ class SecurityController extends AbstractController
      * @Route("/account", name="loggedIn")
      * @IsGranted("ROLE_USER")
      */
-    public function loginSuccess(UserRepository $userRepository,BookRepository $bookRepository)
+    public function loginSuccess()
     {
         return $this->redirectToRoute('homepage');
     }
-    /* $template = 'security/successfulLogin.html.twig';
-
-     $user = $userRepository->find($this->getUser());
-
-     $amountOwned = $bookRepository->countBooksOfUser($user);
-
-     $args = [
-         'userRoles' => $user->getRoles(),
-         'bookAmount' => $amountOwned,
-         'title' => 'Account',
-     ];
-
-     return $this->render($template, $args);
- }*/
 }

@@ -39,7 +39,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request,UserRepository $userRepository): Response
     {
         // Gets all the values in the DIY form
         $userName = $request->get('userName');
@@ -52,15 +52,21 @@ class AdminController extends AbstractController
         // Check if form is submitted as a POST method
         $isSubmitted = $request->isMethod('POST');
 
-        /*
-         * Calls searchForUsername method in UserRepository passing userName from the form
-         */
-        $usernameTaken = $this->getDoctrine()->getRepository(User::class)->searchForUsername($userName);
+        // if the name doesn't exist then this will be be null
+        $usernameExists = $userRepository->searchForUsername($userName);
+
+//
+//        if ( ==)
+//        {
+//            echo "user name is null";
+//            return $this->render('admin/new.html.twig');
+//        }
 
         // if SUBMITTED & VALID - go ahead and create new object
-        if ($isSubmitted && $isValid) {
-            // If username isn't already in DB this null. I.e. username entered must be new otherwise re
-            if ($usernameTaken != null) {
+        if ($isSubmitted && $isValid)
+        {
+            //If username already exists then  is a name  already in DB this null. I.e. username entered must be new otherwise
+            if(is_null($usernameExists) == false) {
                 $this->addFlash(
                     'error',
                     'Username is already taken'
@@ -71,9 +77,11 @@ class AdminController extends AbstractController
             $user = new User();
 
             $user->setUsername($userName);
+
             // password - and encoding
             $encodedPassword = $this->passwordEncoder->encodePassword($user, $password);
             $user->setPassword($encodedPassword);
+
             $user->setRoles([$roleInput]);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -92,11 +100,18 @@ class AdminController extends AbstractController
     {
         $template = 'admin/show.html.twig';
 
+        // Gets the latest book's title and author of user
+        $bookTitle = $bookRepository->usersLatestBookTitle($user->getId());
+        $bookAuthor = $bookRepository->usersLatestBookAuthor($user->getId());
+
+        $bookTotal = $bookRepository->countBooksOfUser($user->getId()); // Amount of the user's total book
+
         $args = [
             'user' => $user,
-            // These two arrays will be looped through on the page to be displayed as one list item
-            'titleOfBooks'=>$bookRepository->searchForUsersLatestBookTitle($user->getId()),
-            'authorOfBooks'=>$bookRepository->searchForUsersLatestBookAuthor($user->getId()),
+            'userId'=> $user->getId(),
+            'bookAmount' => $bookTotal,
+            'titleOfBooks'=> $bookTitle,
+            'authorOfBooks'=> $bookAuthor,
         ];
         return $this->render($template,$args);
     }
@@ -121,8 +136,10 @@ class AdminController extends AbstractController
         if ($isSubmitted && $isValid)
         {
             $user->setUsername($username);
+
             $encodedPassword = $this->passwordEncoder->encodePassword($user, $password);
             $user->setPassword($encodedPassword);
+
             $user->setRoles([$roleInput]);
 
             $this->getDoctrine()->getManager()->flush();
@@ -130,19 +147,26 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('admin/edit.html.twig', [
+        $template = 'admin/edit.html.twig';
+
+        $args =[
             'user' => $user,
-        ]);
+        ];
+
+        return $this->render($template,$args);
     }
 
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, User $user): Response
+    public function delete(Request $request, User $user,BookRepository $bookRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
+
+            $bookRepository->deleteUsersBooks($user->getId()); // removes the given user's books
+
+            $entityManager->remove($user); // removes the user
             $entityManager->flush();
         }
 

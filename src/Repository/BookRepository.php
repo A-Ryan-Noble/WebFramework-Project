@@ -20,35 +20,25 @@ class BookRepository extends ServiceEntityRepository
     }
 
     // Queries for the book title of a user's  book
-    public function searchForUsersLatestBookTitle($users_id)
+    public function usersLatestBookTitle($users_id)
     {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-        SELECT title FROM book b
-        WHERE b.user_id = :id
-        ';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['id' => $users_id]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $stmt->fetch();
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.user = :id')
+            ->setParameter('id', $users_id)
+            ->select('b.title')
+            ->getQuery()
+            ->getResult();
     }
 
     // Queries for the book author of a user's  book
-    public function searchForUsersLatestBookAuthor($users_id)
+    public function usersLatestBookAuthor($users_id)
     {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-        SELECT author FROM book b
-        WHERE b.user_id = :id
-        ';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['id' => $users_id]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $stmt->fetch();
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.user = :id')
+            ->setParameter('id', $users_id)
+            ->select('b.author')
+            ->getQuery()
+            ->getResult();
     }
 
     // Queries to count amount of books owned by user
@@ -57,38 +47,30 @@ class BookRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
             ->andWhere('b.user = :id')
             ->setParameter('id', $users_id)
-            ->select('SUM(b.user)')
+            ->select('COUNT(b.user)')
             ->getQuery()
-            ->getSingleScalarResult();
-        ;
+            ->getSingleScalarResult();;
     }
 
-    // /**
-    //  * @return Book[] Returns an array of Book objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    // Queries the owners of books
+    public function getUsersBooks($userId)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('b.user = :id')// user id is the books owners id
+            ->setParameter('id', $userId)
+            ->select('b.id')// book id
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Book
+    // Queries the books of the given user and deletes them
+    public function deleteUsersBooks($userId)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
+            ->delete()
+            ->andWhere('b.user = :id')// user id is the books owners id
+            ->setParameter('id', $userId)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->execute();
     }
-    */
 }

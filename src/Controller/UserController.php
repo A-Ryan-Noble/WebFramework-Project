@@ -67,9 +67,8 @@ class UserController extends AbstractController
          */
         $q =explode( ' - ', $question);
 
-        /*
-         * Returns the user that entered said array. ie. returns what is after who it was asked by
-         */
+        // Returns the user that entered said array. ie. returns what is after who it was asked by
+
         $q2 = explode('Asked by',$q[1]);
 
         $questionPart = $q[0];
@@ -92,31 +91,10 @@ class UserController extends AbstractController
 
             $book->setReplies([$result]);
 
-//            $questionRem = $this->getDoctrine()->getRepository(Book::class)->findQuestion;
-
-//            $book->removeQuestion($question);
-
-//          $questions = $book->getQuestions();
-//
-//            foreach($questions as $element) {
-//                foreach($element as $valueKey ) {
-//                    if($valueKey = $question){
-//                        //delete this particular object from the $array
-////                        unset($questions[$elementKey]);
-//                        echo  "unset jere. ";
-//                    }
-//                }
-//
-//            // loop throough the questions from db and remove
-//            for ($i = 0; $i<count($questions); $i++) {
-//                print_r($questions[$i]);
-//            }
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($book);
             $entityManager->flush();
 
-//             return back to the given book's view
             $args = [
                 'id' => $book->getId(),
                 'replies' => $result,
@@ -168,6 +146,8 @@ class UserController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($book);
             $entityManager->flush();
+
+            return $this->redirectToRoute('book_index');
         }
         return $this->render($template, $args);
     }
@@ -176,17 +156,7 @@ class UserController extends AbstractController
      */
     public function bidAcceptance(Request $request, Book $book): Response
     {
-        $user = $book->getBidOnBy();
-
-        $args = [
-            'userBid' => $user,
-            'book' => $book
-        ];
-
-        // Check if form is submitted as a POST method
-        $isSubmitted = $request->isMethod('POST');
-
-        if ($isSubmitted == true)
+        if ($book->getBid() > 0)
         {
             $book->setBidAccepted(true);
 
@@ -196,7 +166,14 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('book_index');
         }
-        return $this->render('user/acceptBid.html.twig',$args);
+
+        $args = [
+            'userBid' => $book->getBidOnBy(),
+            'book' => $book,
+            'id' => $book->getId()
+        ];
+
+        return $this->redirectToRoute('book_show',$args);
     }
 
     /**
@@ -207,9 +184,8 @@ class UserController extends AbstractController
         //Calls countBooksOfUser method in UserRepository passing user's Id from the form
         $userGotBooks = $bookRepository->countBooksOfUser($user->getId());
 
-        $ownsAnBook = false; //
+        $ownsAnBook = false; // Unless the user has at least a book this will be false
 
-        // If username has books in DB this is set as.
         if ($userGotBooks >0) {
             $ownsAnBook = true;
         }

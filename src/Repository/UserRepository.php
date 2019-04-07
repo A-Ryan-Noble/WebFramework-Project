@@ -19,48 +19,14 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    // Queries the user table in the db
+    // Queries the user table for a name
     public function searchForUsername($name)
     {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-        SELECT username FROM user
-        WHERE username = :name
-        ';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['name' => $name]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $stmt->fetch();
-    }
-
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('u.username = :name')
+            ->setParameter('name', $name)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getOneOrNullResult() // if the name is found it returns it. Otherwise it returns null
+            ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
