@@ -8,7 +8,7 @@ class BookCest
         $books = $I->grabEntitiesFromRepository('App\Entity\Book');
         $numBooksBefore = count($books);
 
-        $I->amOnPage("/books/new");
+        $I->amOnPage('/books/new');
         $I->fillField('#booktitle','Testing');
         $I->fillField('#book_author', 'John Doe');
         $I->fillField('#book_barcode', '2e3rfer3ddf');
