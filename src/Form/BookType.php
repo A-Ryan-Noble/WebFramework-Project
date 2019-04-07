@@ -30,10 +30,7 @@ class BookType extends AbstractType
                 'class'=>User::class,
                 'choice_label'=>'username',
             ])
-//            ->add('save', SubmitType::class, array('label' => 'Save Book'))
-
         ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
