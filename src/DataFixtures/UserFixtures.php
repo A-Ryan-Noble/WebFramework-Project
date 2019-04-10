@@ -22,7 +22,6 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-
         $userUser = $this->createUser('user', 'user');
 
         $book1 = new Book();
@@ -34,8 +33,7 @@ class UserFixtures extends Fixture
         $book1->setStartingBid(22.45);
         $book1->setBid(0);
         $book1->setBidAccepted(false);
-        //$book1->setQuestions();
-        //$book1->setReplies();
+
         $book1->setUser($userUser);
 
         $userUser->addBooks($book1);
@@ -52,8 +50,7 @@ class UserFixtures extends Fixture
         $book2->setStartingBid(17.75);
         $book2->setBid(0);
         $book2->setBidAccepted(false);
-//        $book2->setQuestions([]);
-//        $book2->setReplies([]);
+
         $book2->setUser($userAdmin);
 
         $userAdmin->addBooks($book2);
@@ -117,8 +114,6 @@ class UserFixtures extends Fixture
         $book->setStartingBid($faker->randomFloat(2, 4, 100)); // random float num *.** from 4 to 100
         $book->setBid(0);
         $book->setBidAccepted(false);
-//        $book->setQuestions([]);
-//       $book->setReplies([]);
 
         $book->setUser($user);
 
