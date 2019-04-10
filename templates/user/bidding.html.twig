@@ -29,9 +29,12 @@
         </tr>
         <tr>
             <th>Current Bid</th>
+            {% if book.bid == 0 %}
+            <td>€{{ book.bid }} </td>
+            {% else %}
             <td>€{{ book.bid }} - {{ book.bidOnBy }}</td>
+            {% endif %}
         </tr>
-
         </tbody>
     </table>
 

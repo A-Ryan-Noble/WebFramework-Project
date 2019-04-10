@@ -40,9 +40,6 @@
                                 by {{ authorOfBooks[loop.index0]|json_encode()|trim('{"author":"')|trim('"}')}}.
                             </li>
                         {% endfor %}
-                        <p>
-                            {#<a href="{{ path('user_ownedBooks', {'id': userId}) }}">View Books in more detail</a>#}
-                        </p>
                     </ul>
                 </td>
             {% endif %}
@@ -69,6 +66,7 @@
     <br>
 
     <hr id="pageHr">
+
     <h5><a href="{{ path('user_index') }}">Go back to the list</a></h5>
 
 {% endblock %}

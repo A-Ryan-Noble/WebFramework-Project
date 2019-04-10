@@ -49,7 +49,6 @@ class UserController extends AbstractController
             ];
             return $this->redirectToRoute('book_show', $args);
         }
-
         return $this->render('user/question.html.twig', ['book' => $book]);
     }
 
@@ -60,14 +59,10 @@ class UserController extends AbstractController
     {
         $question = $request->get(('questionId'));
 
-        /*
-         * Returns an array of the message that the user entered at 1 index.
-         * With " - by (username)" in another
-         */
+        // Returns an array of the message that the user entered at one index, and " - with by (username)" in another index.
         $q =explode( ' - ', $question);
 
         // Returns the user that entered said array. ie. returns what is after who it was asked by
-
         $q2 = explode('Asked by',$q[1]);
 
         $questionPart = $q[0];
@@ -171,7 +166,6 @@ class UserController extends AbstractController
             'book' => $book,
             'id' => $book->getId()
         ];
-
         return $this->redirectToRoute('book_show',$args);
     }
 
@@ -196,7 +190,6 @@ class UserController extends AbstractController
             'books'=>$bookRepository->findAll(),
             'userhasBook' => $ownsAnBook,
         ];
-
         return $this->render($template, $args);
     }
 }

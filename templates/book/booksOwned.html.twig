@@ -6,7 +6,6 @@
 
 {% block body %}
 
-
     {% if books == null %}
 
         <h3> No Books were found</h3>
@@ -34,6 +33,7 @@
                 <th>More Details</th>
             </tr>
             </thead>
+
             <tbody>
             {% for book in books %}
                 {% if book.user == user  %}

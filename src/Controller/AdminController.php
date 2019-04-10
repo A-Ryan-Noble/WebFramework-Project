@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Book;
 use App\Repository\BookRepository;
 use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -58,7 +57,10 @@ class AdminController extends AbstractController
         // if SUBMITTED & VALID - go ahead and create new object
         if ($isSubmitted && $isValid)
         {
-            //If username already exists then  is a name  already in DB this null. I.e. username entered must be new otherwise
+            /*
+             * If username already exists in the DB then it returns it otherwise it is in DB this null.
+             *  I.e. username entered must be new otherwise it results in error message
+            */
             if(is_null($usernameExists) == false) {
                 $this->addFlash(
                     'error',
@@ -106,6 +108,7 @@ class AdminController extends AbstractController
             'titleOfBooks'=> $bookTitle,
             'authorOfBooks'=> $bookAuthor,
         ];
+
         return $this->render($template,$args);
     }
 
@@ -162,7 +165,6 @@ class AdminController extends AbstractController
             $entityManager->remove($user); // removes the user
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('user_index');
     }
 }
