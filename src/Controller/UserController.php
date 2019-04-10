@@ -55,7 +55,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/answer", name="book_answer", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER")
      */
     public function answer(Request $request, Book $book): Response
     {

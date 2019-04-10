@@ -10,7 +10,7 @@ class UserAdminLoginCest
      * @example { "username": "user" ,"password":"user"}
      * @example { "username": "admin" ,"password":"admin"}
      */
-    public function staticLoginPages(AcceptanceTester $I, Example $example)
+    public function loginForBasicUser(AcceptanceTester $I, Example $example)
     {
         $I->amOnPage('/login');
 

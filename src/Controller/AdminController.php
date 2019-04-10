@@ -55,13 +55,6 @@ class AdminController extends AbstractController
         // if the name doesn't exist then this will be be null
         $usernameExists = $userRepository->searchForUsername($userName);
 
-//
-//        if ( ==)
-//        {
-//            echo "user name is null";
-//            return $this->render('admin/new.html.twig');
-//        }
-
         // if SUBMITTED & VALID - go ahead and create new object
         if ($isSubmitted && $isValid)
         {
