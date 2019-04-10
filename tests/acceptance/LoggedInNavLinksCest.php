@@ -6,7 +6,6 @@ use Codeception\Example;
 
 class LoggedInNavLinksCest
 {
-
     /**
      * @example(url="/account", text="Username:")
      * @example(url="/users", text="Password")

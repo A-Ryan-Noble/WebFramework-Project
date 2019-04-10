@@ -33,11 +33,6 @@ class ViewBooksAndUsersCatalogCest
      */
     public function catalogViewToBasicUserViewPage(AcceptanceTester $I, Example $example)
     {
-//        $I->amOnPage('/login');
-//        $I->fillField('username','admin');
-//        $I->fillField('password','admin');
-//        $I->click('Login');
-
         $I->expectTo("Go from viewing all the users viewing page to an individual user's page");
 
         $I->amOnPage('/users');
